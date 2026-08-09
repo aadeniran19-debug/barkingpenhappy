@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Design prototype — private law bench reference</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel: #f4f5f7;
+    --panel-2: #e9ebef;
+    --ink: #16181d;
+    --ink-2: #4a4f5a;
+    --line: #c3c8d0;
+    --line-strong: #8b929e;
+    --say-bg: #fff8e1;
+    --say-bar: #a86b00;
+    --say-ink: #241a00;
+    --gap-bg: #ffe9e9;
+    --gap-ink: #7a1414;
+    --gap-line: #c23b3b;
+    --link: #0b4fa8;
+    --focus: #0b4fa8;
+    --radius: 6px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14161a;
+      --panel: #1e2127;
+      --panel-2: #272b33;
+      --ink: #f2f4f7;
+      --ink-2: #b6bcc7;
+      --line: #3a3f49;
+      --line-strong: #6d7480;
+      --say-bg: #2e2611;
+      --say-bar: #e0a53a;
+      --say-ink: #fdf3dc;
+      --gap-bg: #33191a;
+      --gap-ink: #ffc9c9;
+      --gap-line: #d76060;
+      --link: #7fb4ff;
+      --focus: #7fb4ff;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 80px; }
+
+  a { color: var(--link); }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  h1 { font-size: 1.6rem; line-height: 1.25; margin: 0 0 8px; }
+  h2 { font-size: 1.25rem; margin: 48px 0 4px; padding-top: 20px; border-top: 2px solid var(--line); }
+  h3 { font-size: 1rem; margin: 28px 0 8px; }
+  p { margin: 10px 0; }
+  .lede { color: var(--ink-2); margin: 0 0 4px; }
+  .small { font-size: .87rem; color: var(--ink-2); }
+
+  /* ---- banner ---------------------------------------------------------- */
+  .banner {
+    background: var(--gap-bg);
+    color: var(--gap-ink);
+    border-bottom: 3px solid var(--gap-line);
+    padding: 14px 20px;
+  }
+  .banner .wrap { padding-bottom: 0; }
+  .banner strong { display: block; font-size: 1rem; }
+  .banner p { margin: 6px 0 0; font-size: .9rem; }
+
+  /* ---- decision callout ------------------------------------------------ */
+  .decision {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin: 20px 0;
+  }
+  .decision h3 { margin-top: 0; }
+  .decision ol { margin: 8px 0 0; padding-left: 20px; }
+  .decision li { margin: 6px 0; }
+
+  .rec {
+    display: inline-block;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    background: var(--say-bar);
+    color: #fff;
+    padding: 2px 7px;
+    border-radius: 3px;
+    vertical-align: 2px;
+    margin-left: 8px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .rec { color: #241a00; }
+  }
+
+  /* ---- tabs ------------------------------------------------------------ */
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 0; }
+  .tabs button {
+    font: inherit;
+    font-weight: 600;
+    padding: 9px 14px;
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  .tabs button[aria-selected="true"] {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+
+  .demo {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-top: -1px;
+    background: var(--bg);
+  }
+  .demo[hidden] { display: none; }
+  .demo-note { font-size: .87rem; color: var(--ink-2); margin: 0 0 14px; }
+
+  /* ---- card ------------------------------------------------------------ */
+  .field { margin: 14px 0; }
+  .field-label {
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin-bottom: 3px;
+  }
+  .field p { margin: 0; }
+  .field ul { margin: 4px 0 0; padding-left: 20px; }
+
+  .say {
+    background: var(--say-bg);
+    color: var(--say-ink);
+    border: 1px solid var(--say-bar);
+    border-left: 6px solid var(--say-bar);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    margin: 6px 0 0;
+    font-size: 1.08rem;
+    line-height: 1.55;
+  }
+  .say .say-tag {
+    display: inline-block;
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+    background: var(--say-bar);
+    color: #fff;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .say .say-tag { color: #241a00; }
+  }
+  .say p { margin: 0; }
+
+  .say-b {
+    border: 2px solid var(--line-strong);
+    border-left: 6px solid var(--ink);
+    background: var(--panel);
+    color: var(--ink);
+  }
+  .say-b .say-tag { background: var(--ink); color: var(--bg); }
+  .say-c {
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    border-radius: var(--radius);
+  }
+  .say-c .say-tag { background: var(--bg); color: var(--ink); }
+
+  .gap {
+    display: block;
+    background: var(--gap-bg);
+    color: var(--gap-ink);
+    border: 1px dashed var(--gap-line);
+    border-radius: 4px;
+    padding: 7px 10px;
+    margin: 6px 0;
+    font-size: .9rem;
+    font-weight: 600;
+  }
+  .gap code { font-weight: 400; }
+
+  .cardmeta {
+    margin-top: 16px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    font-size: .8rem;
+    color: var(--ink-2);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .cardmeta code { background: var(--panel-2); padding: 1px 5px; border-radius: 3px; }
+
+  /* ---- pattern A: accordion ------------------------------------------- */
+  details.acc {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    margin: 8px 0;
+    background: var(--panel);
+  }
+  details.acc > summary {
+    cursor: pointer;
+    padding: 12px 14px;
+    font-weight: 600;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  details.acc > summary::-webkit-details-marker { display: none; }
+  details.acc > summary::before {
+    content: "▸";
+    color: var(--ink-2);
+    font-size: .9em;
+  }
+  details.acc[open] > summary::before { content: "▾"; }
+  details.acc[open] > summary { border-bottom: 1px solid var(--line); }
+  .acc-body { padding: 4px 14px 14px; background: var(--bg); }
+  .sect-tag {
+    margin-left: auto;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 1px 6px;
+  }
+
+  /* ---- pattern B: one screen ------------------------------------------ */
+  .qlist { list-style: none; margin: 0; padding: 0; }
+  .qlist li { margin: 8px 0; }
+  .qbtn {
+    font: inherit;
+    font-weight: 600;
+    text-align: left;
+    width: 100%;
+    padding: 13px 14px;
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .qbtn:hover { background: var(--panel-2); }
+  .backbtn {
+    font: inherit;
+    font-weight: 600;
+    background: none;
+    border: none;
+    color: var(--link);
+    cursor: pointer;
+    padding: 4px 0;
+    margin-bottom: 8px;
+  }
+
+  /* ---- pattern C: two pane -------------------------------------------- */
+  .twopane { display: grid; grid-template-columns: 260px 1fr; gap: 16px; }
+  @media (max-width: 640px) { .twopane { grid-template-columns: 1fr; } }
+  .pane-list { border-right: 1px solid var(--line); padding-right: 12px; }
+  @media (max-width: 640px) { .pane-list { border-right: none; border-bottom: 1px solid var(--line); padding: 0 0 12px; } }
+  .pane-list button {
+    font: inherit;
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 9px 10px;
+    margin: 3px 0;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--ink);
+    cursor: pointer;
+    font-size: .93rem;
+  }
+  .pane-list button[aria-current="true"] {
+    background: var(--panel-2);
+    border-color: var(--line);
+    font-weight: 700;
+  }
+
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .93rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-2); }
+
+  .scroll-x { overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <div class="wrap">
+    <strong>Design prototype — this is not the reference site.</strong>
+    <p>There is no law on this page. Every field below is placeholder text used to compare
+       layouts. Nothing here is checked, and nothing here should be read out.</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+<h1>Choosing the shape before building it</h1>
+<p class="lede">Three ways the cards could work, shown live with identical placeholder content
+   so the comparison is fair. Pick one — or tell me to combine them — and I'll build the
+   skeleton to match.</p>
+
+<div class="decision">
+  <h3>What I need decided</h3>
+  <ol>
+    <li><strong>Card interaction</strong> — Pattern A, B or C below.</li>
+    <li><strong>"What I say to the bench" treatment</strong> — the safety-critical one.</li>
+    <li><strong>Gap markers</strong> — you left this to me; my proposal is at the end to approve or reject.</li>
+  </ol>
+</div>
+
+<h2>1 · Card interaction</h2>
+<p>The same card — one of the questions from your brief — rendered three ways.</p>
+
+<div class="tabs" role="tablist" aria-label="Card interaction patterns">
+  <button role="tab" id="tab-a" aria-controls="panel-a" aria-selected="true">Pattern A — Accordion</button>
+  <button role="tab" id="tab-b" aria-controls="panel-b" aria-selected="false">Pattern B — One screen</button>
+  <button role="tab" id="tab-c" aria-controls="panel-c" aria-selected="false">Pattern C — Two pane</button>
+</div>
+
+<!-- ============ PATTERN A ============ -->
+<div class="demo" id="panel-a" role="tabpanel" aria-labelledby="tab-a">
+  <p class="demo-note"><strong>Click a row to expand it in place.</strong> Several can be open at
+     once. Built on native <code>&lt;details&gt;</code>, so it still works with JavaScript
+     disabled or broken — and browser find-in-page reaches open rows.</p>
+
+  <details class="acc">
+    <summary>Can I do this myself, or refer up? <span class="sect-tag">Gatekeeping</span></summary>
+    <div class="acc-body" data-card></div>
+  </details>
+  <details class="acc">
+    <summary>Was the MIAM exemption validly claimed? <span class="sect-tag">Gatekeeping</span></summary>
+    <div class="acc-body"><p class="small">Placeholder — empty card, headings in place.</p></div>
+  </details>
+  <details class="acc">
+    <summary>Warning notice or penal notice? <span class="sect-tag">Orders</span></summary>
+    <div class="acc-body"><p class="small">Placeholder — empty card, headings in place.</p></div>
+  </details>
+</div>
+
+<!-- ============ PATTERN B ============ -->
+<div class="demo" id="panel-b" role="tabpanel" aria-labelledby="tab-b" hidden>
+  <p class="demo-note"><strong>Click a question — the screen becomes that card, and nothing else.</strong>
+     This is the literal reading of "one question, one screen": the sayable text always lands in
+     the same place, so you build muscle memory for where to look.</p>
+
+  <div id="b-list">
+    <ul class="qlist">
+      <li><button class="qbtn" data-open>Can I do this myself, or refer up? <span class="sect-tag">Gatekeeping</span></button></li>
+      <li><button class="qbtn" disabled style="opacity:.55;cursor:default">Was the MIAM exemption validly claimed? <span class="sect-tag">Gatekeeping</span></button></li>
+      <li><button class="qbtn" disabled style="opacity:.55;cursor:default">Warning notice or penal notice? <span class="sect-tag">Orders</span></button></li>
+    </ul>
+  </div>
+
+  <div id="b-card" hidden>
+    <button class="backbtn" id="b-back">← All questions</button>
+    <h3 style="margin-top:0">Can I do this myself, or refer up?</h3>
+    <div data-card></div>
+  </div>
+</div>
+
+<!-- ============ PATTERN C ============ -->
+<div class="demo" id="panel-c" role="tabpanel" aria-labelledby="tab-c" hidden>
+  <p class="demo-note"><strong>List stays on the left, card renders on the right.</strong>
+     Fastest for moving between related cards without losing your place. Needs screen width —
+     it stacks on a phone, at which point it behaves like Pattern B.</p>
+
+  <div class="twopane">
+    <div class="pane-list" id="c-list">
+      <button aria-current="true" data-sel>Can I do this myself, or refer up?</button>
+      <button disabled style="opacity:.55;cursor:default">Was the MIAM exemption validly claimed?</button>
+      <button disabled style="opacity:.55;cursor:default">Warning notice or penal notice?</button>
+    </div>
+    <div>
+      <h3 style="margin-top:0">Can I do this myself, or refer up?</h3>
+      <div data-card></div>
+    </div>
+  </div>
+</div>
+
+<h3>How they compare</h3>
+<div class="scroll-x">
+<table>
+  <thead>
+    <tr><th>&nbsp;</th><th>A — Accordion</th><th>B — One screen</th><th>C — Two pane</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>Scanning a section</th><td>Best — all titles visible</td><td>Good</td><td>Best</td></tr>
+    <tr><th>Under time pressure</th><td>Good</td><td>Best — nothing else on screen</td><td>Good</td></tr>
+    <tr><th>Find-in-page</th><td>Open rows only</td><td>Current card only</td><td>Current card only</td></tr>
+    <tr><th>On a phone</th><td>Good</td><td>Best</td><td>Stacks to B</td></tr>
+    <tr><th>Works without JS</th><td>Yes</td><td>No</td><td>No</td></tr>
+    <tr><th>Deep link to one card</th><td>Anchor opens the row</td><td>Natural fit</td><td>Selects in list</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="decision">
+  <h3>My recommendation <span class="rec">A + B</span></h3>
+  <p>Use <strong>Pattern A</strong> for section pages — you scan and expand without losing the
+     list — and have every card <em>also</em> reachable as <strong>Pattern B</strong> at its own
+     anchor, which is where the homepage "What am I being asked?" links land you.</p>
+  <p class="small">This costs one extra rendering path but gets both behaviours from one set of
+     card data, and it satisfies the brief's stable-ID rule directly: the ID is the anchor, and
+     the anchor is a usable screen. Pattern C is the one I'd drop — it's the most code, and its
+     advantage disappears on a small screen.</p>
+</div>
+
+<h2>2 · "What I say to the bench"</h2>
+<p>Your brief calls this the only text you would ever say out loud. It has to be unmistakable at
+   a glance, and it must never be confusable with a prompt in a reasons scaffold. Three
+   treatments, same words:</p>
+
+<h3>Treatment 1 — tinted panel, accent bar, label <span class="rec">recommended</span></h3>
+<div class="say">
+  <span class="say-tag">SAY</span>
+  <p>Sample wording, layout demonstration only. This is where the advice formulation sits, in
+     the words you would actually use.</p>
+</div>
+
+<h3>Treatment 2 — heavy border, no colour</h3>
+<div class="say say-b">
+  <span class="say-tag">SAY</span>
+  <p>Sample wording, layout demonstration only. This is where the advice formulation sits, in
+     the words you would actually use.</p>
+</div>
+
+<h3>Treatment 3 — full inversion</h3>
+<div class="say say-c">
+  <span class="say-tag">SAY</span>
+  <p>Sample wording, layout demonstration only. This is where the advice formulation sits, in
+     the words you would actually use.</p>
+</div>
+
+<p class="small"><strong>Why treatment 1.</strong> It differs from body text on three channels at
+   once — colour, border weight, and an explicit <em>SAY</em> label — so it survives a bad
+   projector, a greyscale printout, and colour-blindness. Treatment 3 reads well on screen but
+   inverts to a solid black block when printed, and prompts in scaffolds need to be visually
+   <em>weaker</em> than surrounding text, which is easier to arrange against 1 than against 3.</p>
+
+<h2>3 · Gap markers</h2>
+<p>You left this to me. Proposal, in three parts:</p>
+
+<p><strong>In the page</strong> — a dashed red block that cannot be mistaken for content and
+   cannot sit inside a <em>SAY</em> panel:</p>
+
+<span class="gap">⚠ GAP — provision not verified. Nothing to rely on here yet.</span>
+
+<p><strong>In the source</strong> — a greppable token, so every outstanding gap can be listed
+   with one search rather than by reading the file:</p>
+<p><span class="gap"><code>[[GAP: PD2C para list — not verified]]</code></span></p>
+
+<p><strong>On the homepage</strong> — a live count ("14 gaps") linking to a list of every one, so
+   the unfinished parts are visible rather than buried.</p>
+
+<p class="small">The rule I'd enforce in the build: a gap marker is never permitted inside a
+   <em>SAY</em> panel. If the wording isn't verified, the panel doesn't render at all — the card
+   shows the gap where the panel would be. That way anything sitting in a SAY box is, by
+   construction, something checked.</p>
+
+<h2>Where this goes next</h2>
+<p>Once you've picked, I'll build the skeleton: six sections, homepage launcher with search and
+   the "What am I being asked?" list, all four page templates, and the card set stubbed with
+   headings and gap markers in place. Then you and the knowledge base fill it.</p>
+<p class="small">This prototype page gets replaced by the real site at that point — it exists
+   only to make this decision concrete.</p>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // One card definition, rendered into all three patterns so the comparison is fair.
+  var CARD = [
+    ["Trigger", "<p>Placeholder — when am I looking at this?</p>"],
+    ["Can I do this myself?", "<p>Placeholder — the PD2C position, or refer to the bench.</p>" +
+      '<span class="gap">⚠ GAP — PD2C as modified: paragraph list not verified.</span>'],
+    ["The rule", '<p>Placeholder — bare provision, numbered, linking down to the Law section ' +
+      '(<a href="#" onclick="return false">example anchor</a>).</p>'],
+    ["__SAY__", "<p>Sample wording, layout demonstration only. This is where the advice " +
+      "formulation sits, in the words you would actually use.</p>"],
+    ["Traps", "<ul><li>Placeholder — first thing that goes wrong.</li>" +
+      "<li>Placeholder — second thing that goes wrong.</li></ul>"]
+  ];
+
+  function renderCard(host) {
+    var html = "";
+    CARD.forEach(function (f) {
+      if (f[0] === "__SAY__") {
+        html += '<div class="field"><div class="field-label">What I say to the bench</div>' +
+                '<div class="say"><span class="say-tag">SAY</span>' + f[1] + "</div></div>";
+      } else {
+        html += '<div class="field"><div class="field-label">' + f[0] + "</div>" + f[1] + "</div>";
+      }
+    });
+    html += '<div class="cardmeta"><span>Last checked: <strong>not yet checked</strong></span>' +
+            "<span>Card ID <code>gk-refer-up</code></span></div>";
+    host.innerHTML = html;
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-card]"), renderCard);
+
+  // Tabs
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  tabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      tabs.forEach(function (t) {
+        var selected = t === tab;
+        t.setAttribute("aria-selected", String(selected));
+        document.getElementById(t.getAttribute("aria-controls")).hidden = !selected;
+      });
+    });
+  });
+
+  // Pattern B: list <-> single card
+  var bList = document.getElementById("b-list");
+  var bCard = document.getElementById("b-card");
+  var openBtn = document.querySelector("[data-open]");
+  var backBtn = document.getElementById("b-back");
+  if (openBtn && backBtn) {
+    openBtn.addEventListener("click", function () {
+      bList.hidden = true; bCard.hidden = false; backBtn.focus();
+    });
+    backBtn.addEventListener("click", function () {
+      bCard.hidden = true; bList.hidden = false; openBtn.focus();
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

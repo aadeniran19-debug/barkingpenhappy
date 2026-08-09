@@ -30,6 +30,22 @@ Every card carries a stable ID and a "Last checked" date.
 
 Full specification in [`CLAUDE.md`](CLAUDE.md).
 
+## Deployment
+
+Published from [`site/`](site/) to GitHub Pages by
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml) on every push to `main`.
+
+**Live at:** https://aadeniran19-debug.github.io/barkingpenhappy/
+
+One-time setup: **Settings → Pages → Source → GitHub Actions**. Until that is set, the
+workflow will fail at the deploy step.
+
+The page stays a single self-contained HTML file with no external requests, so saving it to
+disk and opening it offline works exactly as it does over Pages.
+
+> `site/index.html` is currently a **design prototype**, not the reference site — it exists to
+> settle layout decisions and contains no law.
+
 ## Adding a source
 
 ```bash
