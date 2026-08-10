@@ -203,12 +203,27 @@ subfolders, and `doc_type` does the classifying. See its
 - Until that entry exists and is verified, cards carry a `[[GAP: authority — …]]` marker.
   A case name suggested from memory is a *candidate for verification*, never content.
 
-## Raw PDFs in sources/
+## Raw documents in sources/ — convert on upload
 
 The raw PDFs I upload to `knowledge-base/sources/` are inputs to the entry-creation
-process, not entries. The three "Moudle A/B/C" PDFs are background reading only — their
-provenance is unconfirmed, so nothing from them is quoted in the knowledge base or on the
-site; they may inform which cards exist, nothing more.
+process, not entries. **Standing instruction: whenever I upload a new document (PDF or
+otherwise), convert it into structured `.md` knowledge-base entries** following
+CONTRIBUTING.md, without waiting to be asked. Conversion rules learned from the first
+batch:
+
+- The uploads are typically extracts from *The Family Court Practice* ("the Red Book",
+  LexisNexis). **Provision text in, editorial out**: the statute/rule/PD text is Crown
+  copyright and reproducible; the Red Book's paragraph markers (`[3.20]`), `Note—`,
+  `Amendments—`, `Overview—` annotations, Essentials boxes and case digests are
+  copyrighted commentary and must not be reproduced. Amendment *facts* may be restated in
+  `## History` in fresh words. Case names the commentary flags go in `## Notes` as
+  unverified candidates.
+- Provenance is recorded honestly: `official_source_url: offline`, a `## Provenance`
+  section naming the uploaded file, `status: unknown`, `confidence: unverified`,
+  `verified_by` saying exactly what the text was checked against. I verify against the
+  official source and only then does anything reach the site.
+- The three "Moudle A/B/C" PDFs remain background reading only — provenance unconfirmed,
+  nothing from them is quoted in the knowledge base or on the site.
 
 ## Scope reminder
 

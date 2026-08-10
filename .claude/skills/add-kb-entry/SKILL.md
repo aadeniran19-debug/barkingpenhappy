@@ -16,6 +16,15 @@ working summary of it, and where they differ, CONTRIBUTING.md wins.
    tell the user which document to supply; do not reconstruct from memory, ever.
    The "Moudle A/B/C" PDFs are background only — never quote from them.
 
+   **Red Book extracts** (uploads from *The Family Court Practice*, LexisNexis):
+   provision text in, editorial out. Never reproduce the publisher's paragraph
+   markers (`[3.20]`), `Note—`/`Amendments—`/`Overview—` annotations, Essentials
+   boxes, or case digests — that is copyrighted commentary. Restate amendment
+   *facts* in `## History` in fresh words; list commentary-flagged case names in
+   `## Notes` as unverified candidates. Use `official_source_url: offline` with a
+   full `## Provenance` section naming the uploaded file; never guess a URL.
+   Extraction: `pdfplumber` first, `pypdf` if spacing comes out corrupted.
+
 2. **Check pilot status and licence** before copying anything (CONTRIBUTING.md
    steps 2–3). Pathfinder instruments change; note the version and date on the
    document itself.
