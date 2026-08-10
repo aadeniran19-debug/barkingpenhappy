@@ -8,6 +8,7 @@ entry is still current, and it is the most common and most useful kind of line h
 | Date | Entry ID | Reviewer | Action | Result |
 | --- | --- | --- | --- | --- |
 | 2026-08-09 | — | A. Adeniran | Knowledge base created | Structure, schema, and templates in place; no entries yet |
+| 2026-08-10 | — | A. Adeniran | Restructured | Flattened to a single `sources/` folder; schema retargeted to England and Wales private family law; citation style set to OSCOLA; no entries yet |
 
 **Actions:** `added`, `verified`, `re-checked`, `amended`, `superseded`, `corrected`,
 `reclassified`, `removed`.

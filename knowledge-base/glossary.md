@@ -17,12 +17,13 @@ Format:
 ## Knowledge-base terms
 
 ### Primary authority
-The law itself: constitutions, statutes, regulations, treaties, judicial opinions.
-Stored under `primary/`.
+The law itself: statutes, FPR rules, practice directions, judgments.
+`authority_level: binding-primary` or `persuasive-primary`.
 
-### Secondary authority
-Commentary *about* the law: treatises, restatements, articles. Persuasive at most.
-Stored under `secondary/`.
+### Commentary
+Writing *about* the law: the Red Book, textbooks, articles. Persuasive at most, and
+copyrighted — stored as excerpts with pinpoint cites, never in full.
+`authority_level: commentary`.
 
 ### Binding vs. persuasive
 Binding authority a decision-maker must follow; persuasive authority they may consider.

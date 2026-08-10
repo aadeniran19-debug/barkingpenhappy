@@ -139,9 +139,10 @@ project. These are the working rules that implement it.
 ## The knowledge base is the source of record
 
 [`knowledge-base/`](knowledge-base/) holds cited source material, one provision per entry,
-copied verbatim from its official publisher with retrieval date and currency recorded. See
-its [README](knowledge-base/README.md) and
-[`_schema/frontmatter.md`](knowledge-base/_schema/frontmatter.md).
+copied verbatim from its official publisher with retrieval date and currency recorded.
+Entries all live in [`knowledge-base/sources/`](knowledge-base/sources/) — there are no
+subfolders, and `doc_type` does the classifying. See its
+[README](knowledge-base/README.md) and [`schema.md`](knowledge-base/schema.md).
 
 - Content for the **Law** section should come from knowledge-base entries, not from recall.
   Where an entry exists, the Law page reproduces its verbatim text and cites it.

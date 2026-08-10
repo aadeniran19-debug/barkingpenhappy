@@ -16,10 +16,11 @@ currency recorded. The site's Law section is sourced from there rather than from
 | --- | --- |
 | [`CLAUDE.md`](CLAUDE.md) | The project brief and the sourcing rules. Read first. |
 | [`knowledge-base/`](knowledge-base/) | Cited legal source material. Start at its [README](knowledge-base/README.md). |
+| [`knowledge-base/sources/`](knowledge-base/sources/) | Every entry — one provision per file, no subfolders. |
 | [`knowledge-base/INDEX.md`](knowledge-base/INDEX.md) | Master list of every entry. |
 | [`knowledge-base/CONTRIBUTING.md`](knowledge-base/CONTRIBUTING.md) | How to add a source. Read before adding anything. |
-| [`knowledge-base/_schema/`](knowledge-base/_schema/) | Required metadata fields and allowed values. |
-| [`knowledge-base/_templates/`](knowledge-base/_templates/) | Copy `source-entry.md` to start a new entry. |
+| [`knowledge-base/schema.md`](knowledge-base/schema.md) | Required metadata fields and allowed values. |
+| [`knowledge-base/entry-template.md`](knowledge-base/entry-template.md) | Copy this to start a new entry. |
 | [`tools/validate_kb.py`](tools/validate_kb.py) | Frontmatter and cross-reference validator. |
 
 ## The site
@@ -49,10 +50,9 @@ disk and opening it offline works exactly as it does over Pages.
 ## Adding a source
 
 ```bash
-cp knowledge-base/_templates/source-entry.md \
-   knowledge-base/primary/regulations/<your-id>.md
+cp knowledge-base/entry-template.md knowledge-base/sources/<your-id>.md
 # paste the official text verbatim, complete the frontmatter,
-# then register it in INDEX.md and _meta/review-log.md
+# then register it in INDEX.md and review-log.md
 python3 tools/validate_kb.py
 ```
 
