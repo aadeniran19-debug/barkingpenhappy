@@ -41,8 +41,6 @@ anchors to it.
 | FPR 2010 rules and practice directions | Summaries written from memory |
 | Pathfinder pilot instruments — PD36Z, PD12B (Pilot) | Copies with no provenance record |
 | Judgments | Public law or financial remedy material |
-| President's Guidance, Cafcass and HMCTS material | Anything privileged, sealed, or case-identifying |
-| Red Book and textbook commentary, as excerpts | Full reproductions of copyrighted commentary |
 
 Private law only. No public law, no financial remedy.
 
