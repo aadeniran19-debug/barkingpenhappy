@@ -1,0 +1,12 @@
+{
+  "name": "barkingpenhappy-tests",
+  "private": true,
+  "description": "Repo-side Playwright test harness for the bench reference site. Dev tooling only — nothing here ships in site/index.html.",
+  "scripts": {
+    "build": "python3 tools/build_site.py",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}

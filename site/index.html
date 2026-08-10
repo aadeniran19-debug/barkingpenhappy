@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Design prototype — private law bench reference</title>
+<title>Bench reference — private law</title>
 <style>
   :root {
     --bg: #ffffff;
@@ -46,11 +46,13 @@
 
   * { box-sizing: border-box; }
 
+  html { font-size: 16px; }
+
   body {
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font: 1rem/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -59,83 +61,213 @@
   a { color: var(--link); }
   :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
-  h1 { font-size: 1.6rem; line-height: 1.25; margin: 0 0 8px; }
-  h2 { font-size: 1.25rem; margin: 48px 0 4px; padding-top: 20px; border-top: 2px solid var(--line); }
-  h3 { font-size: 1rem; margin: 28px 0 8px; }
+  h1 { font-size: 1.5rem; line-height: 1.25; margin: 20px 0 8px; }
+  h2 { font-size: 1.2rem; margin: 32px 0 8px; }
   p { margin: 10px 0; }
-  .lede { color: var(--ink-2); margin: 0 0 4px; }
   .small { font-size: .87rem; color: var(--ink-2); }
 
-  /* ---- banner ---------------------------------------------------------- */
-  .banner {
-    background: var(--gap-bg);
-    color: var(--gap-ink);
-    border-bottom: 3px solid var(--gap-line);
-    padding: 14px 20px;
+  /* ---- top bar --------------------------------------------------------- */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    border-bottom: 2px solid var(--line);
   }
-  .banner .wrap { padding-bottom: 0; }
-  .banner strong { display: block; font-size: 1rem; }
-  .banner p { margin: 6px 0 0; font-size: .9rem; }
-
-  /* ---- decision callout ------------------------------------------------ */
-  .decision {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-left: 5px solid var(--line-strong);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    margin: 20px 0;
+  .topbar-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
   }
-  .decision h3 { margin-top: 0; }
-  .decision ol { margin: 8px 0 0; padding-left: 20px; }
-  .decision li { margin: 6px 0; }
-
-  .rec {
-    display: inline-block;
-    font-size: .72rem;
-    font-weight: 700;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    background: var(--say-bar);
-    color: #fff;
-    padding: 2px 7px;
-    border-radius: 3px;
-    vertical-align: 2px;
-    margin-left: 8px;
+  .homelink {
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: .95rem;
+    letter-spacing: .02em;
+    padding: 6px 0;
+    margin-right: 4px;
+    white-space: nowrap;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .rec { color: #241a00; }
-  }
-
-  /* ---- tabs ------------------------------------------------------------ */
-  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 0; }
-  .tabs button {
-    font: inherit;
+  nav.sections { display: flex; gap: 4px; flex-wrap: wrap; }
+  nav.sections a {
+    text-decoration: none;
+    color: var(--ink);
     font-weight: 600;
-    padding: 9px 14px;
+    font-size: .9rem;
+    padding: 7px 10px;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+  }
+  nav.sections a:hover { background: var(--panel); }
+  nav.sections a[aria-current="true"] {
+    background: var(--panel-2);
+    border-color: var(--line);
+  }
+  .topbar-tools { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+  .fontbtn {
+    font: inherit;
+    font-weight: 700;
     background: var(--panel);
     color: var(--ink);
     border: 1px solid var(--line);
     border-radius: var(--radius);
+    padding: 4px 9px;
     cursor: pointer;
   }
-  .tabs button[aria-selected="true"] {
-    background: var(--ink);
-    color: var(--bg);
-    border-color: var(--ink);
+  .gapchip {
+    font-size: .78rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--gap-ink);
+    background: var(--gap-bg);
+    border: 1px solid var(--gap-line);
+    border-radius: 999px;
+    padding: 3px 10px;
+    white-space: nowrap;
   }
 
-  .demo {
+  /* ---- homepage -------------------------------------------------------- */
+  .search {
+    width: 100%;
+    font: inherit;
+    font-size: 1.05rem;
+    padding: 12px 14px;
+    margin: 20px 0 6px;
+    border: 2px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .search-hint { margin: 0 0 4px; }
+  .results { list-style: none; margin: 8px 0 0; padding: 0; }
+  .results li { margin: 6px 0; }
+  .results a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+    padding: 11px 13px;
+    background: var(--panel);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 16px;
-    margin-top: -1px;
-    background: var(--bg);
   }
-  .demo[hidden] { display: none; }
-  .demo-note { font-size: .87rem; color: var(--ink-2); margin: 0 0 14px; }
+  .results a:hover { background: var(--panel-2); }
 
-  /* ---- card ------------------------------------------------------------ */
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+    margin: 22px 0;
+  }
+  .tiles a {
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 14px;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .tiles a:hover { background: var(--panel-2); }
+  .tiles .tile-sub { display: block; font-size: .8rem; font-weight: 400; color: var(--ink-2); margin-top: 4px; }
+
+  .qlist { list-style: none; margin: 8px 0 0; padding: 0; }
+  .qlist li { margin: 8px 0; }
+  .qlist a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+    padding: 13px 14px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .qlist a:hover { background: var(--panel-2); }
+
+  .homestatus {
+    margin-top: 28px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    font-size: .85rem;
+    color: var(--ink-2);
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* ---- tags ------------------------------------------------------------ */
+  .sect-tag {
+    margin-left: auto;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 1px 6px;
+    white-space: nowrap;
+  }
+  .type-tag {
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 1px 6px;
+    white-space: nowrap;
+  }
+
+  /* ---- accordion (section pages, Pattern A) ---------------------------- */
+  details.acc {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    margin: 8px 0;
+    background: var(--panel);
+  }
+  details.acc > summary {
+    cursor: pointer;
+    padding: 12px 14px;
+    font-weight: 600;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  details.acc > summary::-webkit-details-marker { display: none; }
+  details.acc > summary::before { content: "▸"; color: var(--ink-2); font-size: .9em; }
+  details.acc[open] > summary::before { content: "▾"; }
+  details.acc[open] > summary { border-bottom: 1px solid var(--line); }
+  .acc-body { padding: 4px 14px 14px; background: var(--bg); }
+  .openfull { font-size: .85rem; font-weight: 600; margin: 8px 0 2px; display: inline-block; }
+
+  /* ---- card fields ----------------------------------------------------- */
+  .backbtn {
+    font: inherit;
+    font-weight: 600;
+    background: none;
+    border: none;
+    color: var(--link);
+    cursor: pointer;
+    padding: 4px 0;
+    margin: 14px 0 0;
+    display: inline-block;
+    text-decoration: none;
+  }
   .field { margin: 14px 0; }
   .field-label {
     font-size: .74rem;
@@ -145,8 +277,9 @@
     color: var(--ink-2);
     margin-bottom: 3px;
   }
-  .field p { margin: 0; }
+  .field p { margin: 0 0 6px; }
   .field ul { margin: 4px 0 0; padding-left: 20px; }
+  .field li { margin: 4px 0; }
 
   .say {
     background: var(--say-bg);
@@ -168,27 +301,45 @@
     color: #fff;
     padding: 2px 7px;
     border-radius: 3px;
-    margin-bottom: 8px;
+    margin: 0 6px 8px 0;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) .say .say-tag { color: #241a00; }
   }
-  .say p { margin: 0; }
+  .say p { margin: 0 0 6px; }
+  .say p:last-child { margin-bottom: 0; }
+  .draft-tag {
+    display: inline-block;
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+    border: 1px solid var(--say-bar);
+    color: var(--say-ink);
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+  }
 
-  .say-b {
-    border: 2px solid var(--line-strong);
-    border-left: 6px solid var(--ink);
-    background: var(--panel);
-    color: var(--ink);
+  /* Prompts (scaffolds): deliberately weaker than body text, never like SAY */
+  .prompt {
+    border-left: 4px dashed var(--line-strong);
+    color: var(--ink-2);
+    font-style: italic;
+    padding: 6px 12px;
+    margin: 10px 0;
   }
-  .say-b .say-tag { background: var(--ink); color: var(--bg); }
-  .say-c {
-    background: var(--ink);
-    color: var(--bg);
-    border: none;
-    border-radius: var(--radius);
+  .prompt .prompt-tag {
+    display: inline-block;
+    font-style: normal;
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: var(--ink-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    padding: 0 5px;
+    margin-right: 7px;
   }
-  .say-c .say-tag { background: var(--bg); color: var(--ink); }
 
   .gap {
     display: block;
@@ -201,7 +352,7 @@
     font-size: .9rem;
     font-weight: 600;
   }
-  .gap code { font-weight: 400; }
+  .gap code { font-weight: 400; font-size: .8rem; opacity: .8; }
 
   .cardmeta {
     margin-top: 16px;
@@ -216,350 +367,1272 @@
   }
   .cardmeta code { background: var(--panel-2); padding: 1px 5px; border-radius: 3px; }
 
-  /* ---- pattern A: accordion ------------------------------------------- */
-  details.acc {
+  /* ---- reference / authority pages ------------------------------------- */
+  .provision { margin: 26px 0; }
+  .provision h3 {
+    font-size: 1.02rem;
+    margin: 0 0 4px;
+    padding-top: 8px;
+    border-top: 1px solid var(--line);
+  }
+  .cite {
+    font-size: .82rem;
+    color: var(--ink-2);
+    margin: 0 0 8px;
+  }
+  .verbatim {
+    background: var(--panel);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    margin: 8px 0;
-    background: var(--panel);
-  }
-  details.acc > summary {
-    cursor: pointer;
     padding: 12px 14px;
-    font-weight: 600;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
   }
-  details.acc > summary::-webkit-details-marker { display: none; }
-  details.acc > summary::before {
-    content: "▸";
-    color: var(--ink-2);
-    font-size: .9em;
-  }
-  details.acc[open] > summary::before { content: "▾"; }
-  details.acc[open] > summary { border-bottom: 1px solid var(--line); }
-  .acc-body { padding: 4px 14px 14px; background: var(--bg); }
-  .sect-tag {
-    margin-left: auto;
-    font-size: .7rem;
-    font-weight: 700;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    color: var(--ink-2);
-    border: 1px solid var(--line);
-    border-radius: 3px;
-    padding: 1px 6px;
-  }
+  .verbatim p { margin: 0 0 8px; }
+  .verbatim p:last-child { margin-bottom: 0; }
 
-  /* ---- pattern B: one screen ------------------------------------------ */
-  .qlist { list-style: none; margin: 0; padding: 0; }
-  .qlist li { margin: 8px 0; }
-  .qbtn {
-    font: inherit;
-    font-weight: 600;
-    text-align: left;
-    width: 100%;
-    padding: 13px 14px;
+  /* ---- orders ----------------------------------------------------------- */
+  .musthaves {
     background: var(--panel);
-    color: var(--ink);
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    margin: 12px 0;
+  }
+  .musthaves .field-label { margin-bottom: 6px; }
+  .musthaves ul { margin: 0; padding-left: 20px; }
+  .wording {
+    background: var(--panel);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .qbtn:hover { background: var(--panel-2); }
-  .backbtn {
-    font: inherit;
-    font-weight: 600;
-    background: none;
-    border: none;
-    color: var(--link);
-    cursor: pointer;
-    padding: 4px 0;
-    margin-bottom: 8px;
+    padding: 12px 14px;
+    white-space: pre-wrap;
+    font-size: .97rem;
   }
 
-  /* ---- pattern C: two pane -------------------------------------------- */
-  .twopane { display: grid; grid-template-columns: 260px 1fr; gap: 16px; }
-  @media (max-width: 640px) { .twopane { grid-template-columns: 1fr; } }
-  .pane-list { border-right: 1px solid var(--line); padding-right: 12px; }
-  @media (max-width: 640px) { .pane-list { border-right: none; border-bottom: 1px solid var(--line); padding: 0 0 12px; } }
-  .pane-list button {
+  .copybtn {
     font: inherit;
-    display: block;
-    width: 100%;
-    text-align: left;
-    padding: 9px 10px;
-    margin: 3px 0;
-    background: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    color: var(--ink);
-    cursor: pointer;
-    font-size: .93rem;
-  }
-  .pane-list button[aria-current="true"] {
-    background: var(--panel-2);
-    border-color: var(--line);
     font-weight: 700;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    border-radius: var(--radius);
+    padding: 9px 16px;
+    cursor: pointer;
+    margin: 12px 0 4px;
   }
+  .copybtn:active { opacity: .8; }
+  .copied { font-size: .85rem; font-weight: 700; color: var(--ink-2); margin-left: 10px; }
 
-  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .93rem; }
-  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  th { font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-2); }
+  /* ---- gaps listing ----------------------------------------------------- */
+  .gaplist { list-style: none; margin: 10px 0; padding: 0; }
+  .gaplist li { margin: 8px 0; }
 
-  .scroll-x { overflow-x: auto; }
+  /* ---- print ------------------------------------------------------------ */
+  @media print {
+    .topbar, .backbtn, .copybtn, .openfull, .search, .search-hint { display: none !important; }
+    body { font-size: 11pt; }
+    .wrap { max-width: none; padding: 0; }
+    .say { border: 2pt solid #000; }
+    details.acc { break-inside: avoid; }
+    .provision, .field { break-inside: avoid; }
+  }
 </style>
 </head>
 <body>
 
-<div class="banner">
-  <div class="wrap">
-    <strong>Design prototype — this is not the reference site.</strong>
-    <p>There is no law on this page. Every field below is placeholder text used to compare
-       layouts. Nothing here is checked, and nothing here should be read out.</p>
-  </div>
-</div>
-
-<div class="wrap">
-
-<h1>Choosing the shape before building it</h1>
-<p class="lede">Three ways the cards could work, shown live with identical placeholder content
-   so the comparison is fair. Pick one — or tell me to combine them — and I'll build the
-   skeleton to match.</p>
-
-<div class="decision">
-  <h3>What I need decided</h3>
-  <ol>
-    <li><strong>Card interaction</strong> — Pattern A, B or C below.</li>
-    <li><strong>"What I say to the bench" treatment</strong> — the safety-critical one.</li>
-    <li><strong>Gap markers</strong> — you left this to me; my proposal is at the end to approve or reject.</li>
-  </ol>
-</div>
-
-<h2>1 · Card interaction</h2>
-<p>The same card — one of the questions from your brief — rendered three ways.</p>
-
-<div class="tabs" role="tablist" aria-label="Card interaction patterns">
-  <button role="tab" id="tab-a" aria-controls="panel-a" aria-selected="true">Pattern A — Accordion</button>
-  <button role="tab" id="tab-b" aria-controls="panel-b" aria-selected="false">Pattern B — One screen</button>
-  <button role="tab" id="tab-c" aria-controls="panel-c" aria-selected="false">Pattern C — Two pane</button>
-</div>
-
-<!-- ============ PATTERN A ============ -->
-<div class="demo" id="panel-a" role="tabpanel" aria-labelledby="tab-a">
-  <p class="demo-note"><strong>Click a row to expand it in place.</strong> Several can be open at
-     once. Built on native <code>&lt;details&gt;</code>, so it still works with JavaScript
-     disabled or broken — and browser find-in-page reaches open rows.</p>
-
-  <details class="acc">
-    <summary>Can I do this myself, or refer up? <span class="sect-tag">Gatekeeping</span></summary>
-    <div class="acc-body" data-card></div>
-  </details>
-  <details class="acc">
-    <summary>Was the MIAM exemption validly claimed? <span class="sect-tag">Gatekeeping</span></summary>
-    <div class="acc-body"><p class="small">Placeholder — empty card, headings in place.</p></div>
-  </details>
-  <details class="acc">
-    <summary>Warning notice or penal notice? <span class="sect-tag">Orders</span></summary>
-    <div class="acc-body"><p class="small">Placeholder — empty card, headings in place.</p></div>
-  </details>
-</div>
-
-<!-- ============ PATTERN B ============ -->
-<div class="demo" id="panel-b" role="tabpanel" aria-labelledby="tab-b" hidden>
-  <p class="demo-note"><strong>Click a question — the screen becomes that card, and nothing else.</strong>
-     This is the literal reading of "one question, one screen": the sayable text always lands in
-     the same place, so you build muscle memory for where to look.</p>
-
-  <div id="b-list">
-    <ul class="qlist">
-      <li><button class="qbtn" data-open>Can I do this myself, or refer up? <span class="sect-tag">Gatekeeping</span></button></li>
-      <li><button class="qbtn" disabled style="opacity:.55;cursor:default">Was the MIAM exemption validly claimed? <span class="sect-tag">Gatekeeping</span></button></li>
-      <li><button class="qbtn" disabled style="opacity:.55;cursor:default">Warning notice or penal notice? <span class="sect-tag">Orders</span></button></li>
-    </ul>
-  </div>
-
-  <div id="b-card" hidden>
-    <button class="backbtn" id="b-back">← All questions</button>
-    <h3 style="margin-top:0">Can I do this myself, or refer up?</h3>
-    <div data-card></div>
-  </div>
-</div>
-
-<!-- ============ PATTERN C ============ -->
-<div class="demo" id="panel-c" role="tabpanel" aria-labelledby="tab-c" hidden>
-  <p class="demo-note"><strong>List stays on the left, card renders on the right.</strong>
-     Fastest for moving between related cards without losing your place. Needs screen width —
-     it stacks on a phone, at which point it behaves like Pattern B.</p>
-
-  <div class="twopane">
-    <div class="pane-list" id="c-list">
-      <button aria-current="true" data-sel>Can I do this myself, or refer up?</button>
-      <button disabled style="opacity:.55;cursor:default">Was the MIAM exemption validly claimed?</button>
-      <button disabled style="opacity:.55;cursor:default">Warning notice or penal notice?</button>
-    </div>
-    <div>
-      <h3 style="margin-top:0">Can I do this myself, or refer up?</h3>
-      <div data-card></div>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="homelink" href="#/">Bench&nbsp;ref</a>
+    <nav class="sections" id="nav"></nav>
+    <div class="topbar-tools">
+      <a class="gapchip" href="#/gaps" id="gapchip" title="Unverified gaps">…</a>
+      <button class="fontbtn" id="font-down" title="Smaller text" aria-label="Smaller text">A−</button>
+      <button class="fontbtn" id="font-up" title="Larger text" aria-label="Larger text">A+</button>
     </div>
   </div>
 </div>
 
-<h3>How they compare</h3>
-<div class="scroll-x">
-<table>
-  <thead>
-    <tr><th>&nbsp;</th><th>A — Accordion</th><th>B — One screen</th><th>C — Two pane</th></tr>
-  </thead>
-  <tbody>
-    <tr><th>Scanning a section</th><td>Best — all titles visible</td><td>Good</td><td>Best</td></tr>
-    <tr><th>Under time pressure</th><td>Good</td><td>Best — nothing else on screen</td><td>Good</td></tr>
-    <tr><th>Find-in-page</th><td>Open rows only</td><td>Current card only</td><td>Current card only</td></tr>
-    <tr><th>On a phone</th><td>Good</td><td>Best</td><td>Stacks to B</td></tr>
-    <tr><th>Works without JS</th><td>Yes</td><td>No</td><td>No</td></tr>
-    <tr><th>Deep link to one card</th><td>Anchor opens the row</td><td>Natural fit</td><td>Selects in list</td></tr>
-  </tbody>
-</table>
-</div>
-
-<div class="decision">
-  <h3>My recommendation <span class="rec">A + B</span></h3>
-  <p>Use <strong>Pattern A</strong> for section pages — you scan and expand without losing the
-     list — and have every card <em>also</em> reachable as <strong>Pattern B</strong> at its own
-     anchor, which is where the homepage "What am I being asked?" links land you.</p>
-  <p class="small">This costs one extra rendering path but gets both behaviours from one set of
-     card data, and it satisfies the brief's stable-ID rule directly: the ID is the anchor, and
-     the anchor is a usable screen. Pattern C is the one I'd drop — it's the most code, and its
-     advantage disappears on a small screen.</p>
-</div>
-
-<h2>2 · "What I say to the bench"</h2>
-<p>Your brief calls this the only text you would ever say out loud. It has to be unmistakable at
-   a glance, and it must never be confusable with a prompt in a reasons scaffold. Three
-   treatments, same words:</p>
-
-<h3>Treatment 1 — tinted panel, accent bar, label <span class="rec">recommended</span></h3>
-<div class="say">
-  <span class="say-tag">SAY</span>
-  <p>Sample wording, layout demonstration only. This is where the advice formulation sits, in
-     the words you would actually use.</p>
-</div>
-
-<h3>Treatment 2 — heavy border, no colour</h3>
-<div class="say say-b">
-  <span class="say-tag">SAY</span>
-  <p>Sample wording, layout demonstration only. This is where the advice formulation sits, in
-     the words you would actually use.</p>
-</div>
-
-<h3>Treatment 3 — full inversion</h3>
-<div class="say say-c">
-  <span class="say-tag">SAY</span>
-  <p>Sample wording, layout demonstration only. This is where the advice formulation sits, in
-     the words you would actually use.</p>
-</div>
-
-<p class="small"><strong>Why treatment 1.</strong> It differs from body text on three channels at
-   once — colour, border weight, and an explicit <em>SAY</em> label — so it survives a bad
-   projector, a greyscale printout, and colour-blindness. Treatment 3 reads well on screen but
-   inverts to a solid black block when printed, and prompts in scaffolds need to be visually
-   <em>weaker</em> than surrounding text, which is easier to arrange against 1 than against 3.</p>
-
-<h2>3 · Gap markers</h2>
-<p>You left this to me. Proposal, in three parts:</p>
-
-<p><strong>In the page</strong> — a dashed red block that cannot be mistaken for content and
-   cannot sit inside a <em>SAY</em> panel:</p>
-
-<span class="gap">⚠ GAP — provision not verified. Nothing to rely on here yet.</span>
-
-<p><strong>In the source</strong> — a greppable token, so every outstanding gap can be listed
-   with one search rather than by reading the file:</p>
-<p><span class="gap"><code>[[GAP: PD2C para list — not verified]]</code></span></p>
-
-<p><strong>On the homepage</strong> — a live count ("14 gaps") linking to a list of every one, so
-   the unfinished parts are visible rather than buried.</p>
-
-<p class="small">The rule I'd enforce in the build: a gap marker is never permitted inside a
-   <em>SAY</em> panel. If the wording isn't verified, the panel doesn't render at all — the card
-   shows the gap where the panel would be. That way anything sitting in a SAY box is, by
-   construction, something checked.</p>
-
-<h2>Where this goes next</h2>
-<p>Once you've picked, I'll build the skeleton: six sections, homepage launcher with search and
-   the "What am I being asked?" list, all four page templates, and the card set stubbed with
-   headings and gap markers in place. Then you and the knowledge base fill it.</p>
-<p class="small">This prototype page gets replaced by the real site at that point — it exists
-   only to make this decision concrete.</p>
-
-</div>
+<div class="wrap"><main id="app" aria-live="polite"></main></div>
 
 <script>
-(function () {
-  "use strict";
+"use strict";
+/* Bench reference — single-file app.
+   GENERATED FILE NOTE: site/index.html is built from site/src/template.html and
+   site/content/*.js by tools/build_site.py. Edit those, then rebuild. */
 
-  // One card definition, rendered into all three patterns so the comparison is fair.
-  var CARD = [
-    ["Trigger", "<p>Placeholder — when am I looking at this?</p>"],
-    ["Can I do this myself?", "<p>Placeholder — the PD2C position, or refer to the bench.</p>" +
-      '<span class="gap">⚠ GAP — PD2C as modified: paragraph list not verified.</span>'],
-    ["The rule", '<p>Placeholder — bare provision, numbered, linking down to the Law section ' +
-      '(<a href="#" onclick="return false">example anchor</a>).</p>'],
-    ["__SAY__", "<p>Sample wording, layout demonstration only. This is where the advice " +
-      "formulation sits, in the words you would actually use.</p>"],
-    ["Traps", "<ul><li>Placeholder — first thing that goes wrong.</li>" +
-      "<li>Placeholder — second thing that goes wrong.</li></ul>"]
-  ];
+var Site = (function () {
 
-  function renderCard(host) {
-    var html = "";
-    CARD.forEach(function (f) {
-      if (f[0] === "__SAY__") {
-        html += '<div class="field"><div class="field-label">What I say to the bench</div>' +
-                '<div class="say"><span class="say-tag">SAY</span>' + f[1] + "</div></div>";
-      } else {
-        html += '<div class="field"><div class="field-label">' + f[0] + "</div>" + f[1] + "</div>";
-      }
-    });
-    html += '<div class="cardmeta"><span>Last checked: <strong>not yet checked</strong></span>' +
-            "<span>Card ID <code>gk-refer-up</code></span></div>";
-    host.innerHTML = html;
+  var sections = [];            // {id, label, blurb}
+  var pages = {};               // id -> page object
+  var order = [];               // page ids in registration order
+  var questions = [];           // {text, page, anchor}
+
+  /* ---------- authoring helpers (used by content fragments) ---------- */
+
+  function GAP(reason) {
+    return '<span class="gap">⚠ GAP — ' + esc(reason) +
+           ' <code>[[GAP: ' + esc(reason) + ']]</code></span>';
   }
 
-  Array.prototype.forEach.call(document.querySelectorAll("[data-card]"), renderCard);
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
 
-  // Tabs
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
-  tabs.forEach(function (tab) {
-    tab.addEventListener("click", function () {
-      tabs.forEach(function (t) {
-        var selected = t === tab;
-        t.setAttribute("aria-selected", String(selected));
-        document.getElementById(t.getAttribute("aria-controls")).hidden = !selected;
+  function section(def) { sections.push(def); }
+
+  function register(type, def) {
+    if (pages[def.id]) { throw new Error("Duplicate page id: " + def.id); }
+    def.type = type;
+    pages[def.id] = def;
+    order.push(def.id);
+  }
+
+  function card(def)     { register("card", def); }
+  function law(def)      { register("law", def); }        // reference page
+  function authority(def){ register("authority", def); }
+  function scaffold(def) { register("scaffold", def); }   // template page
+  function orderPage(def){ register("order", def); }
+  function question(text, pageId, anchor) { questions.push({ text: text, page: pageId, anchor: anchor || null }); }
+
+  /* ---------- rendering ---------- */
+
+  var TYPE_LABEL = { card: "Card", law: "Reference", authority: "Authority",
+                     scaffold: "Scaffold", order: "Order" };
+
+  function sectionOf(id) {
+    for (var i = 0; i < sections.length; i++) if (sections[i].id === id) return sections[i];
+    return null;
+  }
+
+  function sectTag(page) {
+    var s = sectionOf(page.section);
+    return s ? '<span class="sect-tag">' + esc(s.label) + "</span>" : "";
+  }
+
+  function fieldHtml(label, bodyHtml) {
+    if (!bodyHtml) return "";
+    return '<div class="field"><div class="field-label">' + esc(label) + "</div>" + bodyHtml + "</div>";
+  }
+
+  function sayHtml(page) {
+    // Invariant: a gap marker never sits inside a SAY panel. If the wording is
+    // not present, the gap renders where the panel would be.
+    if (!page.say) {
+      return fieldHtml("What I say to the bench",
+        GAP(page.sayGap || ("say wording for " + page.id + " — not drafted")));
+    }
+    var draft = page.lastChecked ? "" : '<span class="draft-tag">DRAFT — not yet checked</span> ';
+    return fieldHtml("What I say to the bench",
+      '<div class="say"><span class="say-tag">SAY</span>' + draft + page.say + "</div>");
+  }
+
+  function metaHtml(page) {
+    return '<div class="cardmeta"><span>Last checked: <strong>' +
+           esc(page.lastChecked || "not yet checked") + "</strong></span>" +
+           '<span>ID <code>' + esc(page.id) + "</code></span></div>";
+  }
+
+  function cardBody(page) {
+    var h = "";
+    h += fieldHtml("Trigger", page.trigger || GAP("trigger for " + page.id + " — not written"));
+    h += fieldHtml("Can I do this myself?", page.myself || GAP("PD2C position for " + page.id + " — not written"));
+    h += fieldHtml("The rule", page.rule || GAP("rule for " + page.id + " — not verified"));
+    if (page.authority) h += fieldHtml("Authority", page.authority);
+    h += sayHtml(page);
+    h += fieldHtml("Traps", page.traps && page.traps.length
+      ? "<ul><li>" + page.traps.join("</li><li>") + "</li></ul>" : GAP("traps for " + page.id + " — not written"));
+    if (page.practice) h += fieldHtml("Practice", page.practice);
+    h += metaHtml(page);
+    return h;
+  }
+
+  function scaffoldBody(page) {
+    var h = "";
+    if (page.intro) h += "<p>" + page.intro + "</p>";
+    if (page.steps && page.steps.length) {
+      page.steps.forEach(function (st) {
+        h += '<div class="prompt"><span class="prompt-tag">PROMPT</span>' + st + "</div>";
+      });
+      h += '<button class="copybtn" data-copy-scaffold="' + esc(page.id) + '">Copy structure</button>';
+    } else {
+      h += GAP("scaffold prompts for " + page.id + " — not written");
+    }
+    h += '<p class="small">Prompts are structure, not prose. Reasons are composed fresh every time — a scaffold adopted wholesale produces appealable reasons.</p>';
+    h += metaHtml(page);
+    return h;
+  }
+
+  function orderBody(page) {
+    var h = "";
+    h += '<div class="musthaves"><div class="field-label">Must-haves</div>' +
+         (page.mustHaves && page.mustHaves.length
+           ? "<ul><li>" + page.mustHaves.join("</li><li>") + "</li></ul>"
+           : GAP("must-haves for " + page.id + " — not written")) + "</div>";
+    if (page.wording) {
+      h += '<div class="wording">' + page.wording + "</div>";
+      h += '<button class="copybtn" data-copy-order="' + esc(page.id) + '">Copy wording</button>';
+    } else {
+      h += GAP("order wording for " + page.id + " — not verified");
+    }
+    if (page.notes) h += fieldHtml("Notes", page.notes);
+    h += metaHtml(page);
+    return h;
+  }
+
+  function lawBody(page) {
+    var h = "";
+    if (page.intro) h += "<p>" + page.intro + "</p>";
+    (page.provisions || []).forEach(function (pr) {
+      h += '<div class="provision"><h3 id="' + esc(pr.anchor) + '">' + esc(pr.heading) + "</h3>" +
+           '<p class="cite">' + (pr.cite ? esc(pr.cite) : "citation pending") +
+           (pr.currentThrough ? " · current through " + esc(pr.currentThrough) : " · currency unknown") + "</p>" +
+           (pr.body ? '<div class="verbatim">' + pr.body + "</div>" : GAP("verbatim text — " + pr.heading + " — not in knowledge base yet")) +
+           "</div>";
+    });
+    if (!page.provisions || !page.provisions.length) h += GAP("provisions for " + page.id + " — none entered");
+    h += metaHtml(page);
+    return h;
+  }
+
+  function authorityBody(page) {
+    var h = "";
+    // `candidate` holds a case name suggested from memory: a verification task,
+    // never content. It renders only ever inside a gap marker.
+    h += fieldHtml("Citation", page.citation ? "<p>" + page.citation + "</p>"
+      : GAP(page.candidate
+          ? "authority — candidate: " + page.candidate + " — verify via Find Case Law before any reliance"
+          : "citation for " + page.id + " — candidate not verified"));
+    h += fieldHtml("What it decides", page.decides ? "<p>" + page.decides + "</p>" : GAP("holding summary for " + page.id + " — not verified"));
+    h += fieldHtml("The passage that matters", page.passage ? '<div class="verbatim">' + page.passage + "</div>" : GAP("verbatim passage for " + page.id + " — not in knowledge base yet"));
+    if (page.citedBy && page.citedBy.length) {
+      h += fieldHtml("Cards that rely on this", "<ul><li>" + page.citedBy.map(function (id) {
+        var p = pages[id];
+        return p ? '<a href="#/' + esc(id) + '">' + esc(p.title) + "</a>" : esc(id);
+      }).join("</li><li>") + "</li></ul>");
+    }
+    h += metaHtml(page);
+    return h;
+  }
+
+  var BODY = { card: cardBody, scaffold: scaffoldBody, order: orderBody,
+               law: lawBody, authority: authorityBody };
+
+  function pageBody(page) { return BODY[page.type](page); }
+
+  /* ---------- views ---------- */
+
+  var app, searchIndex = null;
+
+  function stripTags(html) { return String(html).replace(/<[^>]*>/g, " "); }
+
+  function pageSearchText(page) {
+    var parts = [page.title];
+    ["trigger", "myself", "rule", "authority", "say", "intro", "citation", "decides",
+     "passage", "wording", "notes", "practice"].forEach(function (k) {
+      if (page[k]) parts.push(page[k]);
+    });
+    (page.traps || []).forEach(function (t) { parts.push(t); });
+    (page.steps || []).forEach(function (s) { parts.push(s); });
+    (page.mustHaves || []).forEach(function (m) { parts.push(m); });
+    (page.provisions || []).forEach(function (pr) {
+      parts.push(pr.heading); if (pr.body) parts.push(pr.body);
+    });
+    return stripTags(parts.join(" ")).toLowerCase();
+  }
+
+  function buildIndex() {
+    if (searchIndex) return searchIndex;
+    searchIndex = order.map(function (id) {
+      return { id: id, title: pages[id].title, text: pageSearchText(pages[id]) };
+    });
+    return searchIndex;
+  }
+
+  function gapCount() {
+    var n = 0;
+    order.forEach(function (id) { n += gapsIn(pages[id]).length; });
+    return n;
+  }
+
+  function gapsIn(page) {
+    var m = pageBody(page).match(/\[\[GAP:/g);
+    return m || [];
+  }
+
+  function viewHome() {
+    var h = "";
+    h += '<label class="small search-hint" for="q">Search every card — press <strong>/</strong> anywhere to get here, Esc clears</label>';
+    h += '<input class="search" id="q" type="search" placeholder="Search…" autocomplete="off">';
+    h += '<ul class="results" id="results" hidden></ul>';
+    h += '<div class="tiles" id="tiles">';
+    sections.forEach(function (s) {
+      h += '<a href="#/s/' + esc(s.id) + '">' + esc(s.label) +
+           '<span class="tile-sub">' + esc(s.blurb || "") + "</span></a>";
+    });
+    h += "</div>";
+    h += "<h2>What am I being asked?</h2>";
+    h += '<ul class="qlist">';
+    questions.forEach(function (q) {
+      var target = "#/" + q.page + (q.anchor ? "/" + q.anchor : "");
+      var p = pages[q.page];
+      h += '<li><a href="' + esc(target) + '">' + esc(q.text) + (p ? sectTag(p) : "") + "</a></li>";
+    });
+    h += "</ul>";
+    h += '<div class="homestatus"><span>' + gapCount() + " unverified gaps — <a href=\"#/gaps\">list</a></span>" +
+         "<span>Verified law: none yet — knowledge base is empty</span></div>";
+    return h;
+  }
+
+  function viewSection(sid) {
+    var s = sectionOf(sid);
+    if (!s) return viewMissing(sid);
+    var h = "<h1>" + esc(s.label) + "</h1>";
+    if (s.blurb) h += '<p class="small">' + esc(s.blurb) + "</p>";
+    var found = 0;
+    order.forEach(function (id) {
+      var p = pages[id];
+      if (p.section !== sid) return;
+      found++;
+      h += '<details class="acc" id="acc-' + esc(id) + '"><summary>' + esc(p.title) +
+           ' <span class="type-tag">' + TYPE_LABEL[p.type] + "</span></summary>" +
+           '<div class="acc-body"><a class="openfull" href="#/' + esc(id) + '">Open as full page →</a>' +
+           pageBody(p) + "</div></details>";
+    });
+    if (!found) h += '<p class="small">Nothing in this section yet.</p>';
+    return h;
+  }
+
+  function viewPage(id, anchor) {
+    var p = pages[id];
+    if (!p) return viewMissing(id);
+    var h = '<a class="backbtn" href="#/s/' + esc(p.section) + '">← ' +
+            esc((sectionOf(p.section) || { label: "Home" }).label) + "</a>";
+    h += "<h1>" + esc(p.title) + "</h1>";
+    h += pageBody(p);
+    return h;
+  }
+
+  function viewGaps() {
+    var h = "<h1>Unverified gaps</h1>" +
+            '<p class="small">Every <code>[[GAP: …]]</code> on the site. A gap is a task; a guess is a defect.</p>';
+    h += '<ul class="gaplist">';
+    order.forEach(function (id) {
+      var n = gapsIn(pages[id]).length;
+      if (!n) return;
+      h += '<li><a href="#/' + esc(id) + '">' + esc(pages[id].title) + "</a> — " + n +
+           (n === 1 ? " gap" : " gaps") + " " + sectTag(pages[id]) + "</li>";
+    });
+    h += "</ul>";
+    return h;
+  }
+
+  function viewMissing(id) {
+    return "<h1>Not found</h1><p>No page with ID <code>" + esc(id) +
+           '</code>. <a href="#/">Back to the launcher</a>.</p>';
+  }
+
+  /* ---------- router ---------- */
+
+  function route() {
+    var hash = location.hash.replace(/^#\/?/, "");
+    var parts = hash.split("/").filter(Boolean);
+    var html, anchor = null;
+
+    if (!parts.length) { html = viewHome(); }
+    else if (parts[0] === "s") { html = viewSection(parts[1]); }
+    else if (parts[0] === "gaps") { html = viewGaps(); }
+    else { html = viewPage(parts[0]); anchor = parts[1] || null; }
+
+    app.innerHTML = html;
+    updateNav(parts);
+    updateGapChip();
+    wireView();
+
+    if (anchor) {
+      var el = document.getElementById(anchor);
+      if (el) { el.scrollIntoView(); el.style.outline = "3px solid var(--focus)"; }
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  function updateNav(parts) {
+    var nav = document.getElementById("nav");
+    var current = null;
+    if (parts[0] === "s") current = parts[1];
+    else if (parts.length && pages[parts[0]]) current = pages[parts[0]].section;
+    nav.innerHTML = sections.map(function (s) {
+      return '<a href="#/s/' + esc(s.id) + '"' +
+             (s.id === current ? ' aria-current="true"' : "") + ">" + esc(s.label) + "</a>";
+    }).join("");
+  }
+
+  function updateGapChip() {
+    document.getElementById("gapchip").textContent = gapCount() + " gaps";
+  }
+
+  /* ---------- behaviours ---------- */
+
+  function wireView() {
+    var q = document.getElementById("q");
+    if (q) {
+      q.addEventListener("input", function () { runSearch(q.value); });
+      q.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { q.value = ""; runSearch(""); }
+      });
+    }
+    Array.prototype.forEach.call(document.querySelectorAll("[data-copy-scaffold]"), function (btn) {
+      btn.addEventListener("click", function () {
+        var p = pages[btn.getAttribute("data-copy-scaffold")];
+        copyText(p.steps.map(function (s) { return "• " + stripTags(s).replace(/\s+/g, " ").trim(); }).join("\n\n"), btn);
       });
     });
-  });
-
-  // Pattern B: list <-> single card
-  var bList = document.getElementById("b-list");
-  var bCard = document.getElementById("b-card");
-  var openBtn = document.querySelector("[data-open]");
-  var backBtn = document.getElementById("b-back");
-  if (openBtn && backBtn) {
-    openBtn.addEventListener("click", function () {
-      bList.hidden = true; bCard.hidden = false; backBtn.focus();
-    });
-    backBtn.addEventListener("click", function () {
-      bCard.hidden = true; bList.hidden = false; openBtn.focus();
+    Array.prototype.forEach.call(document.querySelectorAll("[data-copy-order]"), function (btn) {
+      btn.addEventListener("click", function () {
+        var p = pages[btn.getAttribute("data-copy-order")];
+        copyText(stripTags(p.wording).trim(), btn);
+      });
     });
   }
+
+  function runSearch(value) {
+    var out = document.getElementById("results");
+    var tiles = document.getElementById("tiles");
+    var v = value.trim().toLowerCase();
+    if (!v) { out.hidden = true; out.innerHTML = ""; if (tiles) tiles.style.display = ""; return; }
+    var hits = buildIndex().filter(function (e) {
+      return e.title.toLowerCase().indexOf(v) !== -1 || e.text.indexOf(v) !== -1;
+    }).slice(0, 30);
+    out.hidden = false;
+    if (tiles) tiles.style.display = "none";
+    out.innerHTML = hits.length
+      ? hits.map(function (e) {
+          return '<li><a href="#/' + esc(e.id) + '">' + esc(e.title) + sectTag(pages[e.id]) + "</a></li>";
+        }).join("")
+      : '<li class="small">No matches.</li>';
+  }
+
+  function copyText(text, btn) {
+    function done() {
+      var note = document.createElement("span");
+      note.className = "copied";
+      note.textContent = "Copied";
+      btn.insertAdjacentElement("afterend", note);
+      setTimeout(function () { note.remove(); }, 1500);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+    } else { fallbackCopy(text); done(); }
+  }
+
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    ta.remove();
+  }
+
+  /* ---------- global keys + font size ---------- */
+
+  var FONT_KEY = "benchref-font-px";
+
+  function setFont(px) {
+    px = Math.max(14, Math.min(22, px));
+    document.documentElement.style.fontSize = px + "px";
+    try { localStorage.setItem(FONT_KEY, String(px)); } catch (e) {}
+  }
+  function currentFont() {
+    var v = 16;
+    try { v = parseInt(localStorage.getItem(FONT_KEY), 10) || 16; } catch (e) {}
+    return v;
+  }
+
+  function boot() {
+    app = document.getElementById("app");
+    setFont(currentFont());
+    document.getElementById("font-up").addEventListener("click", function () { setFont(currentFont() + 1); });
+    document.getElementById("font-down").addEventListener("click", function () { setFont(currentFont() - 1); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "/" && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) {
+        e.preventDefault();
+        if (location.hash !== "#/" && location.hash !== "") { location.hash = "#/"; }
+        // route() runs synchronously on hashchange in some browsers only; focus after tick
+        setTimeout(function () {
+          var q = document.getElementById("q");
+          if (q) q.focus();
+        }, 0);
+      }
+    });
+    window.addEventListener("hashchange", route);
+    route();
+  }
+
+  return {
+    GAP: GAP,
+    section: section, card: card, law: law, authority: authority,
+    scaffold: scaffold, order: orderPage, question: question,
+    boot: boot,
+    // exposed for the Playwright suite
+    _pages: pages, _order: order, _sections: sections, _questions: questions,
+    _gapCount: gapCount, _pageBody: pageBody
+  };
 })();
+window.SITE = Site;
 </script>
+
+<script>
+/* GENERATED — do not edit site/index.html directly.
+   Edit site/src/template.html or site/content/*.js and run
+   python3 tools/build_site.py */
+
+/* ---- 00-sections.js ---- */
+/* The six sections — fixed order, per the brief. Don't add a seventh. */
+
+Site.section({ id: "law",         label: "Law",         blurb: "Provisions and authorities the cards point to" });
+Site.section({ id: "gatekeeping", label: "Gatekeeping", blurb: "MIAM, C1A and PD12J, urgent applications, allocation" });
+Site.section({ id: "precourt",    label: "Pre-court",   blurb: "Bundle checks and briefing the bench, by stage" });
+Site.section({ id: "incourt",     label: "In court",    blurb: "Issues arising, scaffolds, running orders" });
+Site.section({ id: "orders",      label: "Orders",      blurb: "Stored wording; warning v penal notices" });
+Site.section({ id: "flags",       label: "Flags",       blurb: "Vulnerability, cross-examination, LiPs, capacity" });
+/* ---- 10-gatekeeping.js ---- */
+/* Gatekeeping — common problem and its solution. */
+
+/* EXAMPLE CARD 1 — fully populated to show the pattern.
+   Substantive statements come from the project brief and are flagged for
+   verification against the knowledge base; nothing is reconstructed from memory. */
+Site.card({
+  id: "gk-refer-up",
+  section: "gatekeeping",
+  title: "Can I do this myself, or refer up?",
+  trigger:
+    "<p>An application or case management step lands in front of me with no judge in the " +
+    "room. Before anything else: is this within my delegated functions, or does it go to " +
+    "the bench or a judge?</p>",
+  myself:
+    "<p>This card <em>is</em> the PD2C question. Working summary per the project brief — " +
+    "verify against the PD2C / PD36Z knowledge-base entries before relying on it:</p>" +
+    "<ul>" +
+    "<li>Where the case is <strong>unallocated, allocated to lay justices, or a higher " +
+    "judge says I may</strong>: PD12B (Pilot) paras 9.3, 13.2–13.4, 13.6, 13.7, 14.4, " +
+    "15.1, 16.1 and 17.1(c) — see <a href=\"#/law-pd2c-modified/functions-lay\">PD2C as " +
+    "modified</a>.</li>" +
+    "<li>Where I am acting as <strong>Gatekeeper</strong>: paras 9.1, 9.2, 9.4, 14.1 and " +
+    "17.1(a) — see <a href=\"#/law-pd2c-modified/functions-gatekeeper\">PD2C as " +
+    "modified</a>.</li>" +
+    "<li>Anything outside those lists is for the bench or a judge.</li>" +
+    "</ul>" +
+    Site.GAP("PD2C as modified by PD36Z — paragraph lists above are per the project brief; verbatim text not yet in the knowledge base"),
+  rule:
+    "<p>PD2C, as modified by PD36Z for Pathfinder courts — " +
+    "<a href=\"#/law-pd2c-modified\">the anchor page</a>. Note also the modified " +
+    "<a href=\"#/law-pd2c-modified/r3-4-2b\">r.3.4(2)(b)</a> (non-court dispute resolution " +
+    "adjournment power runs from receipt of the Child Impact Report) and " +
+    "<a href=\"#/law-pd2c-modified/r25-6\">r.25.6</a> (expert timing).</p>",
+  say:
+    "<p>This is a function I may exercise myself under Practice Direction 2C as modified " +
+    "by PD36Z. I will deal with it and record it in the order.</p>" +
+    "<p>— or —</p>" +
+    "<p>This falls outside my delegated functions under Practice Direction 2C; it needs a " +
+    "decision of the bench.</p>",
+  traps: [
+    "Using the unmodified PD2C list: in a Pathfinder court the PD36Z modification applies, " +
+    "and PD36Z disapplies para 6.1 of PD36ZE — so the PD36ZE version of PD2C does " +
+    "<strong>not</strong> apply either (per the brief; verify).",
+    "Exercising a Gatekeeper-only function when not sitting as Gatekeeper — the two " +
+    "paragraph lists are different.",
+    "Case allocated above lay justices with no direction permitting me to act: the " +
+    "“unallocated / lay justices” limb no longer covers it."
+  ],
+  practice:
+    "<p>Fix which capacity you are acting in <em>before</em> opening the paragraph list: " +
+    "gatekeeper, court associate to a lay bench, or neither. The list you may use follows " +
+    "from that, not from the task in front of you.</p>",
+  lastChecked: null
+});
+
+/* EXAMPLE CARD 2 — fully populated to show the pattern. */
+Site.card({
+  id: "gk-miam-validity",
+  section: "gatekeeping",
+  title: "Was the MIAM exemption validly claimed?",
+  trigger:
+    "<p>A C100 arrives claiming a MIAM exemption. The claim has to be tested at " +
+    "gatekeeping — per the brief, the inquiry happens at allocation, not left to the " +
+    "first hearing.</p>",
+  myself:
+    Site.GAP("whether the MIAM validity inquiry sits within the Gatekeeper functions delegated by PD2C as modified (paras 9.1, 9.2, 9.4, 14.1, 17.1(a)) — verify against the PD2C entry"),
+  rule:
+    "<p>FPR r.3.10 — see <a href=\"#/law-fpr-part3/r3-10\">Part 3</a>. " +
+    "Exemption grounds and their evidence requirements: " +
+    "<a href=\"#/law-fpr-part3/miam-exemptions\">Part 3, MIAM exemptions</a>.</p>" +
+    Site.GAP("r.3.10 verbatim text and the current exemption grounds — not yet in the knowledge base"),
+  say:
+    "<p>The application claims a MIAM exemption on the ground of [ground]. On the papers " +
+    "that exemption [is validly claimed / is not validly claimed, because …]. If it is " +
+    "not validly claimed, the court may direct the applicant to attend a MIAM before the " +
+    "application proceeds.</p>",
+  traps: [
+    "Exemption box ticked with no evidence or particulars at all — a bare tick is a claim, " +
+    "not a valid claim.",
+    "Treating an allegation of domestic abuse as automatically exempting without checking " +
+    "which evidence ground is actually relied on.",
+    "Leaving the inquiry to the first hearing: by then weeks are lost if the exemption " +
+    "fails. The brief's rule is that this is an allocation-stage check."
+  ],
+  lastChecked: null
+});
+
+/* Shells — headings in place, everything else renders as gaps. */
+Site.card({
+  id: "gk-c1a-pd12j",
+  section: "gatekeeping",
+  title: "C1A allegations — how PD12J operates in Pathfinder",
+  trigger: "<p>The C1A (or the application itself) raises allegations of domestic abuse " +
+    "and I need to know what PD12J, as rewritten for Pathfinder, requires at this stage.</p>",
+  rule: "<p>See <a href=\"#/law-pd12j\">PD12J (Pathfinder rewrite)</a> and the Stage 1 " +
+    "Child Impact Report elements at <a href=\"#/law-pd12b-pilot/stage1\">PD12B (Pilot)</a>.</p>" +
+    Site.GAP("PD12J as it operates in Pathfinder — not yet in the knowledge base"),
+  lastChecked: null
+});
+Site.card({
+  id: "gk-urgent-without-notice",
+  section: "gatekeeping",
+  title: "Urgent and without-notice applications",
+  trigger: "<p>An application is marked urgent, or asks to be heard without notice to the " +
+    "respondent.</p>",
+  lastChecked: null
+});
+Site.card({
+  id: "gk-allocation-jurisdiction",
+  section: "gatekeeping",
+  title: "Allocation and jurisdiction",
+  trigger: "<p>Where should this case sit — lay justices, district judge, circuit judge — " +
+    "and is there a jurisdiction issue (habitual residence, existing orders elsewhere)?</p>",
+  lastChecked: null
+});
+/* ---- 20-precourt.js ---- */
+/* Pre-court — bundle checks and briefing the bench, organised by stage. */
+
+Site.card({
+  id: "pc-stage1",
+  section: "precourt",
+  title: "Stage 1 — Information Gathering and Assessment",
+  trigger: "<p>Preparing for a case in Stage 1: Child Impact Report in progress over " +
+    "roughly six weeks — safeguarding checks, party engagement, engagement with the " +
+    "child, DASH risk assessment where domestic abuse features, and consideration of " +
+    "whether s.91(14) would be appropriate on disposal (per PD12Q).</p>",
+  rule: "<p>See <a href=\"#/law-pd12b-pilot/stage1\">PD12B (Pilot) — Stage 1</a>.</p>" +
+    Site.GAP("Stage 1 requirements verbatim — not yet in the knowledge base"),
+  lastChecked: null
+});
+Site.card({
+  id: "pc-stage2-decision",
+  section: "precourt",
+  title: "Stage 2 — Interventions and/or Decision Hearing",
+  trigger: "<p>Preparing for the Decision Hearing at around week 7 — final decision " +
+    "wherever possible. It is a Decision Hearing, never a “final hearing”.</p>",
+  rule: "<p>See <a href=\"#/law-pd12b-pilot/stage2\">PD12B (Pilot) — Stage 2</a> and the " +
+    "terminology modification at <a href=\"#/law-pd27a/decision-hearing-terminology\">rr.12.13, " +
+    "12.15 and PD27A</a>.</p>",
+  lastChecked: null
+});
+Site.card({
+  id: "pc-review",
+  section: "precourt",
+  title: "Review (3–12 months)",
+  trigger: "<p>Preparing for a Review: the question is whether the child's welfare needs " +
+    "are being met in practice — not compliance with the order.</p>",
+  rule: "<p>See <a href=\"#/law-pd12b-pilot/review\">PD12B (Pilot) — Review</a>.</p>",
+  lastChecked: null
+});
+Site.card({
+  id: "pc-enforcement",
+  section: "precourt",
+  title: "Enforcement applications",
+  trigger: "<p>An enforcement application arrives — it has its own route under PD12B " +
+    "(Pilot) paras 17.1–17.4, not the general case pathway.</p>",
+  rule: "<p>See <a href=\"#/law-pd12b-pilot/enforcement\">PD12B (Pilot) — Enforcement</a>.</p>" +
+    Site.GAP("paras 17.1–17.4 verbatim — not yet in the knowledge base"),
+  lastChecked: null
+});
+Site.card({
+  id: "pc-bundle-pd27a",
+  section: "precourt",
+  title: "Bundle check — PD27A as modified",
+  trigger: "<p>Checking the bundle before a hearing. The Child Impact Report is a " +
+    "specified item (per the brief, PD27A para 7.3 as modified).</p>",
+  rule: "<p>See <a href=\"#/law-pd27a/para-7-3\">PD27A as modified — para 7.3</a>.</p>" +
+    Site.GAP("PD27A as modified — bundle contents verbatim — not yet in the knowledge base"),
+  lastChecked: null
+});
+
+/* Briefing note — a scaffold, built around one question. */
+Site.scaffold({
+  id: "pc-briefing-note",
+  section: "precourt",
+  title: "Briefing the bench — is this case safe to conclude at the Decision Hearing?",
+  intro: "One question drives the whole note: <strong>is this case safe to conclude at " +
+    "the Decision Hearing, and if not, why not?</strong> Everything else is supporting " +
+    "material for that answer.",
+  steps: [
+    "State the stage the case is at and what the hearing is listed for.",
+    "Summarise the Child Impact Report's recommendation in one sentence, with a page/paragraph reference.",
+    "Identify anything unresolved that blocks conclusion: safeguarding, disputed facts needing findings, missing report elements, participation issues from the <a href=\"#/flags-sheet\">Flags sheet</a>.",
+    "If not safe to conclude: say exactly what is missing, who provides it, and by when.",
+    "Note any s.91(14) consideration flagged during Stage 1 (per PD12Q).",
+    "List the orders realistically in play, and whether each needs the s.11I warning notice explained."
+  ],
+  lastChecked: null
+});
+/* ---- 30-incourt.js ---- */
+/* In court — issues arising, reasons scaffolds, running orders. */
+
+/* ---- Issues arising (cards) ---- */
+
+Site.card({
+  id: "ic-fact-finding",
+  section: "incourt",
+  title: "Do we need a fact-finding hearing?",
+  trigger: "<p>Allegations are disputed and someone — a party, the Child Impact Report, " +
+    "the bench — has raised whether findings of fact are needed before the case can " +
+    "conclude.</p>",
+  rule: "<p>See <a href=\"#/law-pd12j/fact-finding\">PD12J — fact-finding</a>.</p>" +
+    Site.GAP("PD12J fact-finding criteria as they operate in Pathfinder — not yet in the knowledge base"),
+  authority:
+    "<p>See <a href=\"#/auth-fact-finding-guidance\">appellate guidance on fact-finding " +
+    "and domestic abuse</a> and <a href=\"#/auth-fact-finding-necessity\">on when a " +
+    "fact-finding is necessary</a> — both unverified candidates.</p>",
+  lastChecked: null
+});
+Site.card({
+  id: "ic-conclude-dh",
+  section: "incourt",
+  title: "Can we conclude at the Decision Hearing?",
+  trigger: "<p>Stage 2, Decision Hearing under way: the Pathfinder aim is a final " +
+    "decision wherever possible — but only where it is safe. What has to be true before " +
+    "the case can conclude today?</p>",
+  rule: "<p>See <a href=\"#/law-pd12b-pilot/stage2\">PD12B (Pilot) — Stage 2</a>.</p>",
+  practice: "<p>The pre-court briefing note (<a href=\"#/pc-briefing-note\">is this case " +
+    "safe to conclude?</a>) should already answer this — in court, the job is checking " +
+    "whether anything has changed since it was written.</p>",
+  lastChecked: null
+});
+Site.card({
+  id: "ic-interim-arrangements",
+  section: "incourt",
+  title: "Interim arrangements",
+  trigger: "<p>The case cannot conclude today and someone seeks interim child " +
+    "arrangements in the meantime.</p>",
+  lastChecked: null
+});
+Site.card({
+  id: "ic-s91-14",
+  section: "incourt",
+  title: "s.91(14) — barring further applications",
+  trigger: "<p>Disposal is in sight and a s.91(14) order is in play — raised by a party, " +
+    "the Child Impact Report, or the Stage 1 PD12Q consideration.</p>",
+  rule: "<p>See <a href=\"#/law-ca1989/s91-14\">CA 1989 s.91(14)</a> and " +
+    "<a href=\"#/law-ca1989/s91a\">s.91A</a>, and <a href=\"#/law-pd12q\">PD12Q</a>.</p>" +
+    Site.GAP("s.91(14), s.91A and PD12Q verbatim — not yet in the knowledge base"),
+  authority: "<p>See <a href=\"#/auth-s91-14-guidelines\">the s.91(14) guideline " +
+    "authority</a> — unverified candidate.</p>",
+  lastChecked: null
+});
+
+/* ---- Reasons scaffolds (Template pages) ----
+   Prompts and structure, never ready-made prose. */
+
+Site.scaffold({
+  id: "sc-departing-cir",
+  section: "incourt",
+  title: "Scaffold — departing from the Child Impact Report recommendation",
+  intro: "Use when the bench's decision departs, in any respect, from the Child Impact " +
+    "Report's recommendation. The structure forces the departure to be reasoned, not " +
+    "asserted.",
+  steps: [
+    "State the recommendation being departed from, with its page/paragraph reference in the Child Impact Report.",
+    "Identify each specific respect in which the decision departs from it.",
+    "For each departure: what evidence did the bench prefer, and why?",
+    "Address the welfare analysis: which welfare considerations drove the departure?",
+    "Record expressly that the recommendation was considered and why it was not followed on those points.",
+    "Check: would a reader understand from the reasons alone why the report was not followed?"
+  ],
+  lastChecked: null
+});
+Site.scaffold({
+  id: "sc-findings-of-fact",
+  section: "incourt",
+  title: "Scaffold — findings of fact",
+  lastChecked: null
+});
+Site.scaffold({
+  id: "sc-interim-arrangements",
+  section: "incourt",
+  title: "Scaffold — interim arrangements",
+  lastChecked: null
+});
+Site.scaffold({
+  id: "sc-refusing-adjournment",
+  section: "incourt",
+  title: "Scaffold — refusing an adjournment",
+  lastChecked: null
+});
+Site.scaffold({
+  id: "sc-s91-14",
+  section: "incourt",
+  title: "Scaffold — s.91(14)",
+  lastChecked: null
+});
+Site.scaffold({
+  id: "sc-enforcement-excuse",
+  section: "incourt",
+  title: "Scaffold — enforcement and reasonable excuse",
+  lastChecked: null
+});
+
+/* ---- Running orders (Template pages) — one per hearing type.
+   Sequenced checklists per the brief: prompts, never a script. */
+
+Site.scaffold({
+  id: "ro-stage2-dh",
+  section: "incourt",
+  title: "Running order — Stage 2 Decision Hearing",
+  intro: "The sequence for the hearing itself. Prompts to keep the hearing moving and " +
+    "complete — not words to be said.",
+  steps: [
+    "Open: parties present, representation, interpreter needs met?",
+    "Flags check: anything on the <a href=\"#/flags-sheet\">Flags sheet</a> live in this case — participation directions, cross-examination prohibition, capacity?",
+    "Confirm what the hearing is listed to decide, and whether anything has changed since the briefing note.",
+    "Issues: narrow to what is actually in dispute today.",
+    "Evidence and submissions on the disputed issues only.",
+    "Decision: bench retires — check they take the welfare framework and the Child Impact Report with them.",
+    "Pronouncement: reasons delivered; if departing from the Child Impact Report recommendation, the <a href=\"#/sc-departing-cir\">departure scaffold</a> is engaged.",
+    "Warning notice: s.11I explanation given in plain words for any child arrangements order — see <a href=\"#/ord-warning-or-penal\">warning v penal notice</a>.",
+    "Order check before parties leave: terms, dates, recitals, service — and whether a Review listing is needed.",
+    "s.91(14): was the PD12Q consideration addressed on disposal?"
+  ],
+  lastChecked: null
+});
+Site.scaffold({
+  id: "ro-gatekeeping",
+  section: "incourt",
+  title: "Running order — Gatekeeping / allocation",
+  lastChecked: null
+});
+Site.scaffold({
+  id: "ro-stage1",
+  section: "incourt",
+  title: "Running order — Stage 1 directions",
+  lastChecked: null
+});
+Site.scaffold({
+  id: "ro-review",
+  section: "incourt",
+  title: "Running order — Review hearing",
+  lastChecked: null
+});
+Site.scaffold({
+  id: "ro-enforcement",
+  section: "incourt",
+  title: "Running order — Enforcement hearing",
+  lastChecked: null
+});
+/* ---- 40-orders.js ---- */
+/* Orders — stored wording; hold the line between the mandatory s.11I warning
+   notice and a discretionary penal notice under Part 37. */
+
+/* EXAMPLE CARD 3 — fully populated to show the pattern. */
+Site.card({
+  id: "ord-warning-or-penal",
+  section: "orders",
+  title: "Warning notice or penal notice?",
+  trigger: "<p>An order is being drawn — or a party (usually aggrieved) asks for “a penal " +
+    "notice” on a child arrangements order. Which notice does this order carry, and is " +
+    "there a choice?</p>",
+  myself: "<p>Drawing the order with the correct notice is part of drawing the order. " +
+    "Whether to attach a <em>penal</em> notice is a judicial decision for the bench.</p>" +
+    Site.GAP("confirm the PD2C position on attaching a penal notice — not verified"),
+  rule:
+    "<ul>" +
+    "<li><strong>Warning notice — not optional.</strong> Per the brief: every child " +
+    "arrangements order and every variation must carry a s.11I warning notice — see " +
+    "<a href=\"#/law-ca1989/s11i\">CA 1989 s.11I</a>.</li>" +
+    "<li><strong>Penal notice — discretionary</strong>, under Part 37 — see " +
+    "<a href=\"#/law-part37/penal-notices\">Part 37</a>.</li>" +
+    "</ul>" +
+    Site.GAP("s.11I verbatim and the Part 37 penal notice provision — not yet in the knowledge base"),
+  say:
+    "<p>The order will carry the warning notice that the law requires on every child " +
+    "arrangements order; that is automatic and not a mark against either party. A penal " +
+    "notice is a separate and exceptional step, and would need a decision of the bench " +
+    "with reasons.</p>",
+  traps: [
+    "Varying an existing order and treating the original warning notice as carrying over " +
+    "— per the brief, every variation carries the notice too.",
+    "Letting “penal notice” be added on request, as if administrative — it is " +
+    "discretionary and needs a judicial decision.",
+    "Conflating the two notices when explaining the order, so a routine warning notice " +
+    "is heard as a threat directed at one party."
+  ],
+  lastChecked: null
+});
+
+/* Order pages — stored wording shells. Wording renders only once verified. */
+Site.order({
+  id: "ord-cao-wording",
+  section: "orders",
+  title: "Child arrangements order — wording",
+  mustHaves: [
+    "s.11I warning notice — on every child arrangements order " +
+    "(<a href=\"#/law-ca1989/s11i\">s.11I</a>)",
+    "Live-with / spend-time-with terms specific enough to be enforceable",
+    "Review listing where directed"
+  ],
+  lastChecked: null
+});
+Site.order({
+  id: "ord-variation-wording",
+  section: "orders",
+  title: "Variation of child arrangements order — wording",
+  mustHaves: [
+    "s.11I warning notice — every variation carries it afresh"
+  ],
+  lastChecked: null
+});
+Site.order({
+  id: "ord-penal-notice-wording",
+  section: "orders",
+  title: "Penal notice — wording",
+  mustHaves: [
+    "A judicial decision of the bench, with reasons, before attachment " +
+    "(<a href=\"#/law-part37/penal-notices\">Part 37</a>)"
+  ],
+  lastChecked: null
+});
+Site.order({
+  id: "ord-enforcement-wording",
+  section: "orders",
+  title: "Enforcement order — wording",
+  lastChecked: null
+});
+/* ---- 50-flags.js ---- */
+/* Flags — a single standing sheet, cross-referenced from Gatekeeping and
+   Pre-court, plus the cross-examination card the homepage question lands on. */
+
+Site.law({
+  id: "flags-sheet",
+  section: "flags",
+  title: "Flags — standing sheet",
+  intro: "One sheet, checked in every case: vulnerability, cross-examination, litigants " +
+    "in person, interpreters, capacity. Cross-referenced from Gatekeeping and Pre-court.",
+  provisions: [
+    { anchor: "vulnerability-part3a",
+      heading: "Vulnerability and participation directions — Part 3A and PD3AA",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "cross-exam-qlr",
+      heading: "Prohibition on cross-examination by an alleged perpetrator; QLR appointment",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "lip",
+      heading: "Litigants in person",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "interpreters",
+      heading: "Interpreters",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "capacity-part15",
+      heading: "Capacity and protected parties — Part 15",
+      cite: null, currentThrough: null, body: null }
+  ],
+  lastChecked: null
+});
+
+Site.card({
+  id: "fl-cross-exam",
+  section: "flags",
+  title: "Can he cross-examine her?",
+  trigger: "<p>A party — typically unrepresented — proposes to cross-examine a witness " +
+    "who is an alleged victim of their abuse, or the hearing plan assumes it will " +
+    "happen.</p>",
+  rule: "<p>See the <a href=\"#/flags-sheet/cross-exam-qlr\">Flags sheet</a> and " +
+    "<a href=\"#/law-cross-exam\">the statutory prohibition and QLR framework</a>.</p>" +
+    Site.GAP("the statutory prohibition on cross-examination in person and the QLR appointment provisions — identify the provisions and enter them in the knowledge base"),
+  lastChecked: null
+});
+/* ---- 60-law.js ---- */
+/* Law — thin reference layer. Every verbatim body comes from a knowledge-base
+   entry; until the entry exists and is verified, the provision renders a gap.
+   Working summaries below are from the project brief and say so. */
+
+Site.law({
+  id: "law-pd2c-modified",
+  section: "law",
+  title: "PD2C as modified by PD36Z — what I may do myself",
+  intro: "The anchor page. Working summary per the project brief (verify against the " +
+    "knowledge-base entries before relying on it): the PD36Z modification adds PD12B " +
+    "(Pilot) paras 9.3, 13.2–13.4, 13.6, 13.7, 14.4, 15.1, 16.1 and 17.1(c) where the " +
+    "case is unallocated, allocated to lay justices, or a higher judge says I may; and " +
+    "paras 9.1, 9.2, 9.4, 14.1 and 17.1(a) where I act as Gatekeeper. PD36Z disapplies " +
+    "para 6.1 of PD36ZE, so the PD36ZE modification of PD2C does not apply.",
+  provisions: [
+    { anchor: "scope",
+      heading: "Scope and application",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "functions-lay",
+      heading: "Functions — unallocated / lay justices / higher judge permits",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "functions-gatekeeper",
+      heading: "Functions — acting as Gatekeeper",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "r3-4-2b",
+      heading: "r.3.4(2)(b) as modified — NCDR adjournment runs from receipt of the Child Impact Report",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "r25-6",
+      heading: "r.25.6 as modified — expert timing at SGA / Case Management stage",
+      cite: null, currentThrough: null, body: null }
+  ],
+  lastChecked: null
+});
+
+Site.law({
+  id: "law-pd12b-pilot",
+  section: "law",
+  title: "PD12B (Pilot) — the Pathfinder pathway",
+  intro: "Applies in place of PD12B (Child Arrangements Programme). There is no FHDRA.",
+  provisions: [
+    { anchor: "stage1",
+      heading: "Stage 1 — Information Gathering and Assessment",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "stage2",
+      heading: "Stage 2 — Interventions and/or Decision Hearing",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "review",
+      heading: "Review (3–12 months)",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "enforcement",
+      heading: "Enforcement — paras 17.1–17.4",
+      cite: null, currentThrough: null, body: null }
+  ],
+  lastChecked: null
+});
+
+Site.law({
+  id: "law-pd36z",
+  section: "law",
+  title: "PD36Z — the Pathfinder pilot instrument",
+  provisions: [
+    { anchor: "modifications",
+      heading: "Modifications made by PD36Z",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "pd36ze-disapplication",
+      heading: "Disapplication of PD36ZE para 6.1",
+      cite: null, currentThrough: null, body: null }
+  ],
+  lastChecked: null
+});
+
+Site.law({
+  id: "law-pd27a",
+  section: "law",
+  title: "PD27A as modified — bundles",
+  provisions: [
+    { anchor: "para-7-3",
+      heading: "Para 7.3 — the Child Impact Report as a specified bundle item",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "decision-hearing-terminology",
+      heading: "Decision Hearing terminology — rr.12.13, 12.15 and PD27A as modified",
+      cite: null, currentThrough: null, body: null }
+  ],
+  lastChecked: null
+});
+
+Site.law({
+  id: "law-pd12j",
+  section: "law",
+  title: "PD12J — domestic abuse (as it operates in Pathfinder)",
+  provisions: [
+    { anchor: "pathfinder-rewrite",
+      heading: "How PD12J operates as rewritten for Pathfinder",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "fact-finding",
+      heading: "Fact-finding hearings",
+      cite: null, currentThrough: null, body: null }
+  ],
+  lastChecked: null
+});
+
+Site.law({
+  id: "law-pd12q",
+  section: "law",
+  title: "PD12Q — s.91(14) orders",
+  provisions: [
+    { anchor: "s91-14-consideration",
+      heading: "Considering s.91(14) on disposal",
+      cite: null, currentThrough: null, body: null }
+  ],
+  lastChecked: null
+});
+
+Site.law({
+  id: "law-fpr-part3",
+  section: "law",
+  title: "FPR Part 3 — MIAMs and non-court dispute resolution",
+  provisions: [
+    { anchor: "r3-10",
+      heading: "r.3.10 — MIAM exemption not validly claimed",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "miam-exemptions",
+      heading: "MIAM exemption grounds and evidence",
+      cite: null, currentThrough: null, body: null }
+  ],
+  lastChecked: null
+});
+
+Site.law({
+  id: "law-ca1989",
+  section: "law",
+  title: "Children Act 1989 — private law provisions",
+  intro: "A raw PDF covering ss.8–16A sits in knowledge-base/sources/ awaiting " +
+    "conversion into entries.",
+  provisions: [
+    { anchor: "s1", heading: "s.1 — welfare", cite: null, currentThrough: null, body: null },
+    { anchor: "s8", heading: "s.8 — child arrangements orders", cite: null, currentThrough: null, body: null },
+    { anchor: "s11i", heading: "s.11I — warning notices", cite: null, currentThrough: null, body: null },
+    { anchor: "s91-14", heading: "s.91(14) — barring further applications", cite: null, currentThrough: null, body: null },
+    { anchor: "s91a", heading: "s.91A — s.91(14) supplementary (Domestic Abuse Act 2021)", cite: null, currentThrough: null, body: null }
+  ],
+  lastChecked: null
+});
+
+Site.law({
+  id: "law-cross-exam",
+  section: "law",
+  title: "Prohibition of cross-examination in person; QLR appointment",
+  intro: "The statutory prohibition and the qualified legal representative framework. " +
+    "The governing provisions must be identified and entered in the knowledge base — " +
+    "they are deliberately not named here from memory.",
+  provisions: [
+    { anchor: "prohibition",
+      heading: "The prohibition",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "qlr",
+      heading: "Appointment of a qualified legal representative",
+      cite: null, currentThrough: null, body: null }
+  ],
+  lastChecked: null
+});
+
+Site.law({
+  id: "law-part3a-pd3aa",
+  section: "law",
+  title: "FPR Part 3A and PD3AA — vulnerability and participation",
+  provisions: [
+    { anchor: "vulnerability",
+      heading: "Identifying vulnerability",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "participation-directions",
+      heading: "Participation directions",
+      cite: null, currentThrough: null, body: null }
+  ],
+  lastChecked: null
+});
+
+Site.law({
+  id: "law-part37",
+  section: "law",
+  title: "FPR Part 37 — penal notices and committal",
+  provisions: [
+    { anchor: "penal-notices",
+      heading: "Penal notices",
+      cite: null, currentThrough: null, body: null }
+  ],
+  lastChecked: null
+});
+
+Site.law({
+  id: "law-part15",
+  section: "law",
+  title: "FPR Part 15 — protected parties",
+  provisions: [
+    { anchor: "protected-parties",
+      heading: "Protected parties and litigation friends",
+      cite: null, currentThrough: null, body: null }
+  ],
+  lastChecked: null
+});
+
+Site.law({
+  id: "law-role-authority",
+  section: "law",
+  title: "Role and authority — the delegation chain",
+  intro: "The statutory basis of the justices' legal adviser role: statute → rules → " +
+    "PD2C as modified. When what I may do is challenged, the answer runs down this " +
+    "chain, not from PD2C alone. Every element enters via the knowledge base.",
+  provisions: [
+    { anchor: "statute",
+      heading: "The statute conferring and delegating the functions",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "rules",
+      heading: "The rules made under it",
+      cite: null, currentThrough: null, body: null },
+    { anchor: "pd2c-link",
+      heading: "PD2C as modified — see the anchor page",
+      cite: "Cross-reference", currentThrough: null,
+      body: "<p><a href=\"#/law-pd2c-modified\">PD2C as modified by PD36Z</a>.</p>" }
+  ],
+  lastChecked: null
+});
+
+/* ---- Authorities — candidates only, nothing verified. The candidate name
+   renders inside a gap marker: a verification task, never content. ---- */
+
+Site.authority({
+  id: "auth-fact-finding-guidance",
+  section: "law",
+  title: "Authority — fact-finding hearings and domestic abuse: appellate guidance",
+  candidate: "the Court of Appeal's 2021 guidance widely cited as Re H-N",
+  citedBy: ["ic-fact-finding", "gk-c1a-pd12j"],
+  lastChecked: null
+});
+Site.authority({
+  id: "auth-fact-finding-necessity",
+  section: "law",
+  title: "Authority — when a fact-finding hearing is necessary",
+  candidate: "the Court of Appeal's 2022 decision widely cited as K v K",
+  citedBy: ["ic-fact-finding"],
+  lastChecked: null
+});
+Site.authority({
+  id: "auth-s91-14-guidelines",
+  section: "law",
+  title: "Authority — s.91(14) guidelines",
+  candidate: "the 1999 guideline authority widely cited as Re P, as read with s.91A " +
+    "inserted by the Domestic Abuse Act 2021",
+  citedBy: ["ic-s91-14"],
+  lastChecked: null
+});
+Site.authority({
+  id: "auth-departing-cir",
+  section: "law",
+  title: "Authority — departing from a welfare recommendation: duty to give reasons",
+  candidate: "authority on the duty to give reasons when departing from a Cafcass or " +
+    "equivalent welfare recommendation — to be identified",
+  citedBy: ["sc-departing-cir"],
+  lastChecked: null
+});
+/* ---- 70-questions.js ---- */
+/* Homepage "What am I being asked?" list — the six starting questions from the
+   brief, each linking straight to a card, tagged with its section. */
+
+Site.question("Was the MIAM exemption validly claimed?", "gk-miam-validity");
+Site.question("Can I do this myself, or refer up?", "gk-refer-up");
+Site.question("Do we need a fact-finding hearing?", "ic-fact-finding");
+Site.question("Can he cross-examine her?", "fl-cross-exam");
+Site.question("Can we conclude at the Decision Hearing?", "ic-conclude-dh");
+Site.question("Warning notice or penal notice?", "ord-warning-or-penal");
+</script>
+
+<script>Site.boot();</script>
 
 </body>
 </html>
