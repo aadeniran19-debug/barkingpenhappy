@@ -33,8 +33,18 @@ build a private-law reference website for my own use before, during and after co
 ## What I want built
 
 A single self-contained HTML file that opens in a browser, works offline, and needs no
-server or installation. One file only — no build step, no dependencies, no external
-requests.
+server or installation. One file only — no dependencies, no external requests, and nothing
+to run in order to *use* it.
+
+To keep that file maintainable as it grows, content is authored as small per-card fragments
+under [`site/content/`](site/content/) and assembled into the committed
+[`site/index.html`](site/index.html) by `tools/build_site.py` (Python stdlib only, like the
+KB validator). The built file is always committed alongside the fragments — anyone opening
+the repo gets a working site with no tooling. Run after any content change:
+
+```bash
+python3 tools/build_site.py
+```
 
 ### Navigation — exactly six sections, fixed order
 
@@ -61,13 +71,23 @@ A launcher, not a welcome page. No introduction, no "about this site". It contai
 1. Trigger — when am I looking at this?
 2. Can I do this myself? — the PD2C position, or refer to the bench
 3. The rule — bare provision, numbered, deep-linking into the Law section
-4. What I say to the bench — the actual advice formulation, visually distinct from
+4. Authority *(optional)* — one line per case that bears on the question, linking down to
+   its Authority page in the Law section. No case name appears here until its
+   knowledge-base entry exists and is verified.
+5. What I say to the bench — the actual advice formulation, visually distinct from
    everything else on the page because it's the only text I would ever say out loud
-5. Traps — two or three things that go wrong
-6. Last checked — a date, plus a stable card ID
+6. Traps — two or three things that go wrong
+7. Practice *(optional)* — bench-craft that is guidance, not law: sequencing, what to check
+   before the bench retires. Visually distinct from "The rule" so guidance is never
+   mistaken for authority; cite the source where quotable, gap-mark where not.
+8. Last checked — a date, plus a stable card ID
 
 **Reference page** — the Law section. Longer and scrollable, with anchored headings so cards
-can link to a specific provision rather than the top of the page.
+can link to a specific provision rather than the top of the page. Case law uses a compact
+variant of this template, the **Authority page**: neutral citation, what the case decides in
+one sentence, the passage that matters quoted verbatim by paragraph number, and which cards
+point at it. Every provision or authority shows the `current_through` date of its
+knowledge-base entry inline.
 
 **Template page** — reasons scaffolds. Copy-to-clipboard button. Prompts must render
 obviously differently from sayable text so I can't read an instruction out loud by accident.
@@ -77,7 +97,10 @@ obviously differently from sayable text so I can't read an instruction out loud 
 ### Section contents
 
 - **Law** — thin reference layer, written last, containing only what the working cards point
-  to. PD2C as modified is the anchor page.
+  to. PD2C as modified is the anchor page. Also holds the Authority pages (case law) and a
+  "Role and authority" page setting out the statutory basis of the legal adviser role
+  itself — the delegation chain (statute → rules → PD2C as modified) — every element of
+  which enters via the knowledge base, gap-marked until verified.
 - **Gatekeeping** — common problem and its solution. MIAM exemption not validly claimed
   (r.3.10, and the inquiry must happen at allocation), C1A allegations and how PD12J
   operates as rewritten for Pathfinder, urgent and without-notice applications, allocation
@@ -88,7 +111,11 @@ obviously differently from sayable text so I can't read an instruction out loud 
   question: is this case safe to conclude at the Decision Hearing, and if not, why not?
 - **In court** — issues arising, plus reasons scaffolds. Priority scaffolds: departing from
   the Child Impact Report recommendation, findings of fact, interim arrangements, refusing
-  an adjournment, s.91(14), enforcement and reasonable excuse.
+  an adjournment, s.91(14), enforcement and reasonable excuse. Also one **running order**
+  per hearing type (Gatekeeping/allocation, Stage 1 directions, Stage 2 Decision Hearing,
+  Review, Enforcement) — a sequenced checklist on the Template page type: open, parties and
+  representation, Flags check, issues, evidence, decision, pronouncement, warning-notice
+  explanation, order check before the parties leave. Prompts and structure, never a script.
 - **Orders** — stored wording. Every child arrangements order and every variation must carry
   a s.11I warning notice; hold the line clearly between that and a discretionary penal
   notice under Part 37.
@@ -107,6 +134,16 @@ obviously differently from sayable text so I can't read an instruction out loud 
   wholesale produce appealable reasons — build in that friction deliberately.
 - Clean, plain, high-contrast, fast. This gets read under time pressure. No decorative
   styling.
+- Courtroom ergonomics, v1: `/` focuses the search box and Escape clears it; sticky top
+  nav; large touch targets (court laptops and tablets); a print stylesheet (cards print
+  one per page, no nav); a font-size control. The homepage shows a gap counter and the
+  oldest `current_through` date on the site, so staleness and unfinished verification are
+  visible at a glance. Deferred to v2: a localStorage hearing-notes scratchpad and a
+  pinned "hearing mode" checklist.
+- Every feature gets a Playwright test in `tests/` (repo-side only, never shipped in the
+  HTML file), run with `npx playwright test` before the feature is treated as done. The
+  suite must always include: the built file makes zero external requests; every internal
+  link and anchor resolves; card IDs are unique; the gap counter matches the content.
 - Keep it accurate. If you aren't sure of a rule, provision or modification, say so and
   leave a clearly marked gap rather than guessing. I'll verify against the current rules
   before I rely on any of it.
@@ -157,9 +194,40 @@ subfolders, and `doc_type` does the classifying. See its
   python3 tools/validate_kb.py
   ```
 
+## Case law
+
+- Authorities enter the same way as provisions: a knowledge-base entry (`doc_type: case`)
+  sourced from the National Archives Find Case Law service or BAILII, with the neutral
+  citation, the licence terms, and the quoted passage recorded verbatim by paragraph
+  number. I verify each entry before it is relied on.
+- Until that entry exists and is verified, cards carry a `[[GAP: authority — …]]` marker.
+  A case name suggested from memory is a *candidate for verification*, never content.
+
+## Raw PDFs in sources/
+
+The raw PDFs I upload to `knowledge-base/sources/` are inputs to the entry-creation
+process, not entries. The three "Moudle A/B/C" PDFs are background reading only — their
+provenance is unconfirmed, so nothing from them is quoted in the knowledge base or on the
+site; they may inform which cards exist, nothing more.
+
 ## Scope reminder
 
 Private law only. Nothing here is legal advice; it is a personal working reference that its
 author verifies against the current rules before relying on it. The "Last checked" field on
 every card exists for that reason — populate it honestly, and never with today's date by
 default.
+
+---
+
+# Working practices for Claude
+
+- **Agent model tiers:** any subagents run at Opus 5 or lower (Sonnet/Haiku where the task
+  is mechanical). Fable 5 for agents only when I explicitly say so.
+- **Test before ship:** features are exercised with Playwright before being treated as
+  done (see Rules for the build).
+- **Publishing:** the GitHub Pages deployment stays as-is for now; whether to keep the
+  site on a public URL is deliberately undecided — raise it with me again once the site
+  has real content, and don't extend publishing anywhere else meanwhile.
+- **Teach as you go:** I'm learning Claude Code through this project. When a session uses
+  a feature for the first time (agents, skills, hooks, MCP, plan mode), close with a short
+  plain-language note on what it was and why it was the right tool.

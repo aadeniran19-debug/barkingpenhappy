@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Bench reference — private law</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --panel: #f4f5f7;
+    --panel-2: #e9ebef;
+    --ink: #16181d;
+    --ink-2: #4a4f5a;
+    --line: #c3c8d0;
+    --line-strong: #8b929e;
+    --say-bg: #fff8e1;
+    --say-bar: #a86b00;
+    --say-ink: #241a00;
+    --gap-bg: #ffe9e9;
+    --gap-ink: #7a1414;
+    --gap-line: #c23b3b;
+    --link: #0b4fa8;
+    --focus: #0b4fa8;
+    --radius: 6px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14161a;
+      --panel: #1e2127;
+      --panel-2: #272b33;
+      --ink: #f2f4f7;
+      --ink-2: #b6bcc7;
+      --line: #3a3f49;
+      --line-strong: #6d7480;
+      --say-bg: #2e2611;
+      --say-bar: #e0a53a;
+      --say-ink: #fdf3dc;
+      --gap-bg: #33191a;
+      --gap-ink: #ffc9c9;
+      --gap-line: #d76060;
+      --link: #7fb4ff;
+      --focus: #7fb4ff;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html { font-size: 16px; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 1rem/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px 80px; }
+
+  a { color: var(--link); }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  h1 { font-size: 1.5rem; line-height: 1.25; margin: 20px 0 8px; }
+  h2 { font-size: 1.2rem; margin: 32px 0 8px; }
+  p { margin: 10px 0; }
+  .small { font-size: .87rem; color: var(--ink-2); }
+
+  /* ---- top bar --------------------------------------------------------- */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    border-bottom: 2px solid var(--line);
+  }
+  .topbar-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .homelink {
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: .95rem;
+    letter-spacing: .02em;
+    padding: 6px 0;
+    margin-right: 4px;
+    white-space: nowrap;
+  }
+  nav.sections { display: flex; gap: 4px; flex-wrap: wrap; }
+  nav.sections a {
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: .9rem;
+    padding: 7px 10px;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+  }
+  nav.sections a:hover { background: var(--panel); }
+  nav.sections a[aria-current="true"] {
+    background: var(--panel-2);
+    border-color: var(--line);
+  }
+  .topbar-tools { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+  .fontbtn {
+    font: inherit;
+    font-weight: 700;
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 4px 9px;
+    cursor: pointer;
+  }
+  .gapchip {
+    font-size: .78rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--gap-ink);
+    background: var(--gap-bg);
+    border: 1px solid var(--gap-line);
+    border-radius: 999px;
+    padding: 3px 10px;
+    white-space: nowrap;
+  }
+
+  /* ---- homepage -------------------------------------------------------- */
+  .search {
+    width: 100%;
+    font: inherit;
+    font-size: 1.05rem;
+    padding: 12px 14px;
+    margin: 20px 0 6px;
+    border: 2px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .search-hint { margin: 0 0 4px; }
+  .results { list-style: none; margin: 8px 0 0; padding: 0; }
+  .results li { margin: 6px 0; }
+  .results a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+    padding: 11px 13px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .results a:hover { background: var(--panel-2); }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+    margin: 22px 0;
+  }
+  .tiles a {
+    display: block;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 14px;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .tiles a:hover { background: var(--panel-2); }
+  .tiles .tile-sub { display: block; font-size: .8rem; font-weight: 400; color: var(--ink-2); margin-top: 4px; }
+
+  .qlist { list-style: none; margin: 8px 0 0; padding: 0; }
+  .qlist li { margin: 8px 0; }
+  .qlist a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 600;
+    padding: 13px 14px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .qlist a:hover { background: var(--panel-2); }
+
+  .homestatus {
+    margin-top: 28px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    font-size: .85rem;
+    color: var(--ink-2);
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* ---- tags ------------------------------------------------------------ */
+  .sect-tag {
+    margin-left: auto;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 1px 6px;
+    white-space: nowrap;
+  }
+  .type-tag {
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 1px 6px;
+    white-space: nowrap;
+  }
+
+  /* ---- accordion (section pages, Pattern A) ---------------------------- */
+  details.acc {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    margin: 8px 0;
+    background: var(--panel);
+  }
+  details.acc > summary {
+    cursor: pointer;
+    padding: 12px 14px;
+    font-weight: 600;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  details.acc > summary::-webkit-details-marker { display: none; }
+  details.acc > summary::before { content: "▸"; color: var(--ink-2); font-size: .9em; }
+  details.acc[open] > summary::before { content: "▾"; }
+  details.acc[open] > summary { border-bottom: 1px solid var(--line); }
+  .acc-body { padding: 4px 14px 14px; background: var(--bg); }
+  .openfull { font-size: .85rem; font-weight: 600; margin: 8px 0 2px; display: inline-block; }
+
+  /* ---- card fields ----------------------------------------------------- */
+  .backbtn {
+    font: inherit;
+    font-weight: 600;
+    background: none;
+    border: none;
+    color: var(--link);
+    cursor: pointer;
+    padding: 4px 0;
+    margin: 14px 0 0;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .field { margin: 14px 0; }
+  .field-label {
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin-bottom: 3px;
+  }
+  .field p { margin: 0 0 6px; }
+  .field ul { margin: 4px 0 0; padding-left: 20px; }
+  .field li { margin: 4px 0; }
+
+  .say {
+    background: var(--say-bg);
+    color: var(--say-ink);
+    border: 1px solid var(--say-bar);
+    border-left: 6px solid var(--say-bar);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    margin: 6px 0 0;
+    font-size: 1.08rem;
+    line-height: 1.55;
+  }
+  .say .say-tag {
+    display: inline-block;
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+    background: var(--say-bar);
+    color: #fff;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin: 0 6px 8px 0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .say .say-tag { color: #241a00; }
+  }
+  .say p { margin: 0 0 6px; }
+  .say p:last-child { margin-bottom: 0; }
+  .draft-tag {
+    display: inline-block;
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+    border: 1px solid var(--say-bar);
+    color: var(--say-ink);
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-bottom: 8px;
+  }
+
+  /* Prompts (scaffolds): deliberately weaker than body text, never like SAY */
+  .prompt {
+    border-left: 4px dashed var(--line-strong);
+    color: var(--ink-2);
+    font-style: italic;
+    padding: 6px 12px;
+    margin: 10px 0;
+  }
+  .prompt .prompt-tag {
+    display: inline-block;
+    font-style: normal;
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: var(--ink-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    padding: 0 5px;
+    margin-right: 7px;
+  }
+
+  .gap {
+    display: block;
+    background: var(--gap-bg);
+    color: var(--gap-ink);
+    border: 1px dashed var(--gap-line);
+    border-radius: 4px;
+    padding: 7px 10px;
+    margin: 6px 0;
+    font-size: .9rem;
+    font-weight: 600;
+  }
+  .gap code { font-weight: 400; font-size: .8rem; opacity: .8; }
+
+  .cardmeta {
+    margin-top: 16px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    font-size: .8rem;
+    color: var(--ink-2);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .cardmeta code { background: var(--panel-2); padding: 1px 5px; border-radius: 3px; }
+
+  /* ---- reference / authority pages ------------------------------------- */
+  .provision { margin: 26px 0; }
+  .provision h3 {
+    font-size: 1.02rem;
+    margin: 0 0 4px;
+    padding-top: 8px;
+    border-top: 1px solid var(--line);
+  }
+  .cite {
+    font-size: .82rem;
+    color: var(--ink-2);
+    margin: 0 0 8px;
+  }
+  .verbatim {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+  .verbatim p { margin: 0 0 8px; }
+  .verbatim p:last-child { margin-bottom: 0; }
+
+  /* ---- orders ----------------------------------------------------------- */
+  .musthaves {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    margin: 12px 0;
+  }
+  .musthaves .field-label { margin-bottom: 6px; }
+  .musthaves ul { margin: 0; padding-left: 20px; }
+  .wording {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    white-space: pre-wrap;
+    font-size: .97rem;
+  }
+
+  .copybtn {
+    font: inherit;
+    font-weight: 700;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    border-radius: var(--radius);
+    padding: 9px 16px;
+    cursor: pointer;
+    margin: 12px 0 4px;
+  }
+  .copybtn:active { opacity: .8; }
+  .copied { font-size: .85rem; font-weight: 700; color: var(--ink-2); margin-left: 10px; }
+
+  /* ---- gaps listing ----------------------------------------------------- */
+  .gaplist { list-style: none; margin: 10px 0; padding: 0; }
+  .gaplist li { margin: 8px 0; }
+
+  /* ---- print ------------------------------------------------------------ */
+  @media print {
+    .topbar, .backbtn, .copybtn, .openfull, .search, .search-hint { display: none !important; }
+    body { font-size: 11pt; }
+    .wrap { max-width: none; padding: 0; }
+    .say { border: 2pt solid #000; }
+    details.acc { break-inside: avoid; }
+    .provision, .field { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="homelink" href="#/">Bench&nbsp;ref</a>
+    <nav class="sections" id="nav"></nav>
+    <div class="topbar-tools">
+      <a class="gapchip" href="#/gaps" id="gapchip" title="Unverified gaps">…</a>
+      <button class="fontbtn" id="font-down" title="Smaller text" aria-label="Smaller text">A−</button>
+      <button class="fontbtn" id="font-up" title="Larger text" aria-label="Larger text">A+</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap"><main id="app" aria-live="polite"></main></div>
+
+<script>
+"use strict";
+/* Bench reference — single-file app.
+   GENERATED FILE NOTE: site/index.html is built from site/src/template.html and
+   site/content/*.js by tools/build_site.py. Edit those, then rebuild. */
+
+var Site = (function () {
+
+  var sections = [];            // {id, label, blurb}
+  var pages = {};               // id -> page object
+  var order = [];               // page ids in registration order
+  var questions = [];           // {text, page, anchor}
+
+  /* ---------- authoring helpers (used by content fragments) ---------- */
+
+  function GAP(reason) {
+    return '<span class="gap">⚠ GAP — ' + esc(reason) +
+           ' <code>[[GAP: ' + esc(reason) + ']]</code></span>';
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function section(def) { sections.push(def); }
+
+  function register(type, def) {
+    if (pages[def.id]) { throw new Error("Duplicate page id: " + def.id); }
+    def.type = type;
+    pages[def.id] = def;
+    order.push(def.id);
+  }
+
+  function card(def)     { register("card", def); }
+  function law(def)      { register("law", def); }        // reference page
+  function authority(def){ register("authority", def); }
+  function scaffold(def) { register("scaffold", def); }   // template page
+  function orderPage(def){ register("order", def); }
+  function question(text, pageId, anchor) { questions.push({ text: text, page: pageId, anchor: anchor || null }); }
+
+  /* ---------- rendering ---------- */
+
+  var TYPE_LABEL = { card: "Card", law: "Reference", authority: "Authority",
+                     scaffold: "Scaffold", order: "Order" };
+
+  function sectionOf(id) {
+    for (var i = 0; i < sections.length; i++) if (sections[i].id === id) return sections[i];
+    return null;
+  }
+
+  function sectTag(page) {
+    var s = sectionOf(page.section);
+    return s ? '<span class="sect-tag">' + esc(s.label) + "</span>" : "";
+  }
+
+  function fieldHtml(label, bodyHtml) {
+    if (!bodyHtml) return "";
+    return '<div class="field"><div class="field-label">' + esc(label) + "</div>" + bodyHtml + "</div>";
+  }
+
+  function sayHtml(page) {
+    // Invariant: a gap marker never sits inside a SAY panel. If the wording is
+    // not present, the gap renders where the panel would be.
+    if (!page.say) {
+      return fieldHtml("What I say to the bench",
+        GAP(page.sayGap || ("say wording for " + page.id + " — not drafted")));
+    }
+    var draft = page.lastChecked ? "" : '<span class="draft-tag">DRAFT — not yet checked</span> ';
+    return fieldHtml("What I say to the bench",
+      '<div class="say"><span class="say-tag">SAY</span>' + draft + page.say + "</div>");
+  }
+
+  function metaHtml(page) {
+    return '<div class="cardmeta"><span>Last checked: <strong>' +
+           esc(page.lastChecked || "not yet checked") + "</strong></span>" +
+           '<span>ID <code>' + esc(page.id) + "</code></span></div>";
+  }
+
+  function cardBody(page) {
+    var h = "";
+    h += fieldHtml("Trigger", page.trigger || GAP("trigger for " + page.id + " — not written"));
+    h += fieldHtml("Can I do this myself?", page.myself || GAP("PD2C position for " + page.id + " — not written"));
+    h += fieldHtml("The rule", page.rule || GAP("rule for " + page.id + " — not verified"));
+    if (page.authority) h += fieldHtml("Authority", page.authority);
+    h += sayHtml(page);
+    h += fieldHtml("Traps", page.traps && page.traps.length
+      ? "<ul><li>" + page.traps.join("</li><li>") + "</li></ul>" : GAP("traps for " + page.id + " — not written"));
+    if (page.practice) h += fieldHtml("Practice", page.practice);
+    h += metaHtml(page);
+    return h;
+  }
+
+  function scaffoldBody(page) {
+    var h = "";
+    if (page.intro) h += "<p>" + page.intro + "</p>";
+    if (page.steps && page.steps.length) {
+      page.steps.forEach(function (st) {
+        h += '<div class="prompt"><span class="prompt-tag">PROMPT</span>' + st + "</div>";
+      });
+      h += '<button class="copybtn" data-copy-scaffold="' + esc(page.id) + '">Copy structure</button>';
+    } else {
+      h += GAP("scaffold prompts for " + page.id + " — not written");
+    }
+    h += '<p class="small">Prompts are structure, not prose. Reasons are composed fresh every time — a scaffold adopted wholesale produces appealable reasons.</p>';
+    h += metaHtml(page);
+    return h;
+  }
+
+  function orderBody(page) {
+    var h = "";
+    h += '<div class="musthaves"><div class="field-label">Must-haves</div>' +
+         (page.mustHaves && page.mustHaves.length
+           ? "<ul><li>" + page.mustHaves.join("</li><li>") + "</li></ul>"
+           : GAP("must-haves for " + page.id + " — not written")) + "</div>";
+    if (page.wording) {
+      h += '<div class="wording">' + page.wording + "</div>";
+      h += '<button class="copybtn" data-copy-order="' + esc(page.id) + '">Copy wording</button>';
+    } else {
+      h += GAP("order wording for " + page.id + " — not verified");
+    }
+    if (page.notes) h += fieldHtml("Notes", page.notes);
+    h += metaHtml(page);
+    return h;
+  }
+
+  function lawBody(page) {
+    var h = "";
+    if (page.intro) h += "<p>" + page.intro + "</p>";
+    (page.provisions || []).forEach(function (pr) {
+      h += '<div class="provision"><h3 id="' + esc(pr.anchor) + '">' + esc(pr.heading) + "</h3>" +
+           '<p class="cite">' + (pr.cite ? esc(pr.cite) : "citation pending") +
+           (pr.currentThrough ? " · current through " + esc(pr.currentThrough) : " · currency unknown") + "</p>" +
+           (pr.body ? '<div class="verbatim">' + pr.body + "</div>" : GAP("verbatim text — " + pr.heading + " — not in knowledge base yet")) +
+           "</div>";
+    });
+    if (!page.provisions || !page.provisions.length) h += GAP("provisions for " + page.id + " — none entered");
+    h += metaHtml(page);
+    return h;
+  }
+
+  function authorityBody(page) {
+    var h = "";
+    // `candidate` holds a case name suggested from memory: a verification task,
+    // never content. It renders only ever inside a gap marker.
+    h += fieldHtml("Citation", page.citation ? "<p>" + page.citation + "</p>"
+      : GAP(page.candidate
+          ? "authority — candidate: " + page.candidate + " — verify via Find Case Law before any reliance"
+          : "citation for " + page.id + " — candidate not verified"));
+    h += fieldHtml("What it decides", page.decides ? "<p>" + page.decides + "</p>" : GAP("holding summary for " + page.id + " — not verified"));
+    h += fieldHtml("The passage that matters", page.passage ? '<div class="verbatim">' + page.passage + "</div>" : GAP("verbatim passage for " + page.id + " — not in knowledge base yet"));
+    if (page.citedBy && page.citedBy.length) {
+      h += fieldHtml("Cards that rely on this", "<ul><li>" + page.citedBy.map(function (id) {
+        var p = pages[id];
+        return p ? '<a href="#/' + esc(id) + '">' + esc(p.title) + "</a>" : esc(id);
+      }).join("</li><li>") + "</li></ul>");
+    }
+    h += metaHtml(page);
+    return h;
+  }
+
+  var BODY = { card: cardBody, scaffold: scaffoldBody, order: orderBody,
+               law: lawBody, authority: authorityBody };
+
+  function pageBody(page) { return BODY[page.type](page); }
+
+  /* ---------- views ---------- */
+
+  var app, searchIndex = null;
+
+  function stripTags(html) { return String(html).replace(/<[^>]*>/g, " "); }
+
+  function pageSearchText(page) {
+    var parts = [page.title];
+    ["trigger", "myself", "rule", "authority", "say", "intro", "citation", "decides",
+     "passage", "wording", "notes", "practice"].forEach(function (k) {
+      if (page[k]) parts.push(page[k]);
+    });
+    (page.traps || []).forEach(function (t) { parts.push(t); });
+    (page.steps || []).forEach(function (s) { parts.push(s); });
+    (page.mustHaves || []).forEach(function (m) { parts.push(m); });
+    (page.provisions || []).forEach(function (pr) {
+      parts.push(pr.heading); if (pr.body) parts.push(pr.body);
+    });
+    return stripTags(parts.join(" ")).toLowerCase();
+  }
+
+  function buildIndex() {
+    if (searchIndex) return searchIndex;
+    searchIndex = order.map(function (id) {
+      return { id: id, title: pages[id].title, text: pageSearchText(pages[id]) };
+    });
+    return searchIndex;
+  }
+
+  function gapCount() {
+    var n = 0;
+    order.forEach(function (id) { n += gapsIn(pages[id]).length; });
+    return n;
+  }
+
+  function gapsIn(page) {
+    var m = pageBody(page).match(/\[\[GAP:/g);
+    return m || [];
+  }
+
+  function viewHome() {
+    var h = "";
+    h += '<label class="small search-hint" for="q">Search every card — press <strong>/</strong> anywhere to get here, Esc clears</label>';
+    h += '<input class="search" id="q" type="search" placeholder="Search…" autocomplete="off">';
+    h += '<ul class="results" id="results" hidden></ul>';
+    h += '<div class="tiles" id="tiles">';
+    sections.forEach(function (s) {
+      h += '<a href="#/s/' + esc(s.id) + '">' + esc(s.label) +
+           '<span class="tile-sub">' + esc(s.blurb || "") + "</span></a>";
+    });
+    h += "</div>";
+    h += "<h2>What am I being asked?</h2>";
+    h += '<ul class="qlist">';
+    questions.forEach(function (q) {
+      var target = "#/" + q.page + (q.anchor ? "/" + q.anchor : "");
+      var p = pages[q.page];
+      h += '<li><a href="' + esc(target) + '">' + esc(q.text) + (p ? sectTag(p) : "") + "</a></li>";
+    });
+    h += "</ul>";
+    h += '<div class="homestatus"><span>' + gapCount() + " unverified gaps — <a href=\"#/gaps\">list</a></span>" +
+         "<span>Verified law: none yet — knowledge base is empty</span></div>";
+    return h;
+  }
+
+  function viewSection(sid) {
+    var s = sectionOf(sid);
+    if (!s) return viewMissing(sid);
+    var h = "<h1>" + esc(s.label) + "</h1>";
+    if (s.blurb) h += '<p class="small">' + esc(s.blurb) + "</p>";
+    var found = 0;
+    order.forEach(function (id) {
+      var p = pages[id];
+      if (p.section !== sid) return;
+      found++;
+      h += '<details class="acc" id="acc-' + esc(id) + '"><summary>' + esc(p.title) +
+           ' <span class="type-tag">' + TYPE_LABEL[p.type] + "</span></summary>" +
+           '<div class="acc-body"><a class="openfull" href="#/' + esc(id) + '">Open as full page →</a>' +
+           pageBody(p) + "</div></details>";
+    });
+    if (!found) h += '<p class="small">Nothing in this section yet.</p>';
+    return h;
+  }
+
+  function viewPage(id, anchor) {
+    var p = pages[id];
+    if (!p) return viewMissing(id);
+    var h = '<a class="backbtn" href="#/s/' + esc(p.section) + '">← ' +
+            esc((sectionOf(p.section) || { label: "Home" }).label) + "</a>";
+    h += "<h1>" + esc(p.title) + "</h1>";
+    h += pageBody(p);
+    return h;
+  }
+
+  function viewGaps() {
+    var h = "<h1>Unverified gaps</h1>" +
+            '<p class="small">Every <code>[[GAP: …]]</code> on the site. A gap is a task; a guess is a defect.</p>';
+    h += '<ul class="gaplist">';
+    order.forEach(function (id) {
+      var n = gapsIn(pages[id]).length;
+      if (!n) return;
+      h += '<li><a href="#/' + esc(id) + '">' + esc(pages[id].title) + "</a> — " + n +
+           (n === 1 ? " gap" : " gaps") + " " + sectTag(pages[id]) + "</li>";
+    });
+    h += "</ul>";
+    return h;
+  }
+
+  function viewMissing(id) {
+    return "<h1>Not found</h1><p>No page with ID <code>" + esc(id) +
+           '</code>. <a href="#/">Back to the launcher</a>.</p>';
+  }
+
+  /* ---------- router ---------- */
+
+  function route() {
+    var hash = location.hash.replace(/^#\/?/, "");
+    var parts = hash.split("/").filter(Boolean);
+    var html, anchor = null;
+
+    if (!parts.length) { html = viewHome(); }
+    else if (parts[0] === "s") { html = viewSection(parts[1]); }
+    else if (parts[0] === "gaps") { html = viewGaps(); }
+    else { html = viewPage(parts[0]); anchor = parts[1] || null; }
+
+    app.innerHTML = html;
+    updateNav(parts);
+    updateGapChip();
+    wireView();
+
+    if (anchor) {
+      var el = document.getElementById(anchor);
+      if (el) { el.scrollIntoView(); el.style.outline = "3px solid var(--focus)"; }
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  function updateNav(parts) {
+    var nav = document.getElementById("nav");
+    var current = null;
+    if (parts[0] === "s") current = parts[1];
+    else if (parts.length && pages[parts[0]]) current = pages[parts[0]].section;
+    nav.innerHTML = sections.map(function (s) {
+      return '<a href="#/s/' + esc(s.id) + '"' +
+             (s.id === current ? ' aria-current="true"' : "") + ">" + esc(s.label) + "</a>";
+    }).join("");
+  }
+
+  function updateGapChip() {
+    document.getElementById("gapchip").textContent = gapCount() + " gaps";
+  }
+
+  /* ---------- behaviours ---------- */
+
+  function wireView() {
+    var q = document.getElementById("q");
+    if (q) {
+      q.addEventListener("input", function () { runSearch(q.value); });
+      q.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") { q.value = ""; runSearch(""); }
+      });
+    }
+    Array.prototype.forEach.call(document.querySelectorAll("[data-copy-scaffold]"), function (btn) {
+      btn.addEventListener("click", function () {
+        var p = pages[btn.getAttribute("data-copy-scaffold")];
+        copyText(p.steps.map(function (s) { return "• " + stripTags(s).replace(/\s+/g, " ").trim(); }).join("\n\n"), btn);
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-copy-order]"), function (btn) {
+      btn.addEventListener("click", function () {
+        var p = pages[btn.getAttribute("data-copy-order")];
+        copyText(stripTags(p.wording).trim(), btn);
+      });
+    });
+  }
+
+  function runSearch(value) {
+    var out = document.getElementById("results");
+    var tiles = document.getElementById("tiles");
+    var v = value.trim().toLowerCase();
+    if (!v) { out.hidden = true; out.innerHTML = ""; if (tiles) tiles.style.display = ""; return; }
+    var hits = buildIndex().filter(function (e) {
+      return e.title.toLowerCase().indexOf(v) !== -1 || e.text.indexOf(v) !== -1;
+    }).slice(0, 30);
+    out.hidden = false;
+    if (tiles) tiles.style.display = "none";
+    out.innerHTML = hits.length
+      ? hits.map(function (e) {
+          return '<li><a href="#/' + esc(e.id) + '">' + esc(e.title) + sectTag(pages[e.id]) + "</a></li>";
+        }).join("")
+      : '<li class="small">No matches.</li>';
+  }
+
+  function copyText(text, btn) {
+    function done() {
+      var note = document.createElement("span");
+      note.className = "copied";
+      note.textContent = "Copied";
+      btn.insertAdjacentElement("afterend", note);
+      setTimeout(function () { note.remove(); }, 1500);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+    } else { fallbackCopy(text); done(); }
+  }
+
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    ta.remove();
+  }
+
+  /* ---------- global keys + font size ---------- */
+
+  var FONT_KEY = "benchref-font-px";
+
+  function setFont(px) {
+    px = Math.max(14, Math.min(22, px));
+    document.documentElement.style.fontSize = px + "px";
+    try { localStorage.setItem(FONT_KEY, String(px)); } catch (e) {}
+  }
+  function currentFont() {
+    var v = 16;
+    try { v = parseInt(localStorage.getItem(FONT_KEY), 10) || 16; } catch (e) {}
+    return v;
+  }
+
+  function boot() {
+    app = document.getElementById("app");
+    setFont(currentFont());
+    document.getElementById("font-up").addEventListener("click", function () { setFont(currentFont() + 1); });
+    document.getElementById("font-down").addEventListener("click", function () { setFont(currentFont() - 1); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "/" && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) {
+        e.preventDefault();
+        if (location.hash !== "#/" && location.hash !== "") { location.hash = "#/"; }
+        // route() runs synchronously on hashchange in some browsers only; focus after tick
+        setTimeout(function () {
+          var q = document.getElementById("q");
+          if (q) q.focus();
+        }, 0);
+      }
+    });
+    window.addEventListener("hashchange", route);
+    route();
+  }
+
+  return {
+    GAP: GAP,
+    section: section, card: card, law: law, authority: authority,
+    scaffold: scaffold, order: orderPage, question: question,
+    boot: boot,
+    // exposed for the Playwright suite
+    _pages: pages, _order: order, _sections: sections, _questions: questions,
+    _gapCount: gapCount, _pageBody: pageBody
+  };
+})();
+window.SITE = Site;
+</script>
+
+<script>
+/*__CONTENT__*/
+</script>
+
+<script>Site.boot();</script>
+
+</body>
+</html>
