@@ -1,45 +1,38 @@
 # Index
 
-Master list of every entry in the knowledge base. Add a row when you add an entry.
+Master list of every entry in [`sources/`](sources/). Add a row when you add an entry.
 
-Keep it sorted by path. `EXAMPLE-entry.md` and anything under `_templates/` is
-deliberately excluded.
-
----
-
-## Primary authority
-
-### Constitutions
-
-| ID | Citation | Jurisdiction | Status | Last reviewed |
-| --- | --- | --- | --- | --- |
-| _none yet_ | | | | |
-
-### Statutes
-
-| ID | Citation | Jurisdiction | Status | Last reviewed |
-| --- | --- | --- | --- | --- |
-| _none yet_ | | | | |
-
-### Regulations
-
-| ID | Citation | Jurisdiction | Status | Last reviewed |
-| --- | --- | --- | --- | --- |
-| _none yet_ | | | | |
-
-### Case law
-
-| ID | Citation | Jurisdiction | Status | Last reviewed |
-| --- | --- | --- | --- | --- |
-| _none yet_ | | | | |
-
-### Treaties
-
-| ID | Citation | Parties | Status | Last reviewed |
-| --- | --- | --- | --- | --- |
-| _none yet_ | | | | |
+Grouped by what a source is, which is recorded in each entry's `doc_type` — the folder
+structure does not do this work, deliberately.
 
 ---
+
+## Practice directions
+
+Including the Pathfinder pilot instruments. PD2C as modified by PD36Z is the anchor page
+for the whole site.
+
+| ID | Citation | Pilot | Status | Last reviewed |
+| --- | --- | --- | --- | --- |
+| _none yet_ | | | | |
+
+## Rules — FPR 2010
+
+| ID | Citation | Status | Last reviewed |
+| --- | --- | --- | --- |
+| _none yet_ | | | |
+
+## Statutes
+
+| ID | Citation | Status | Last reviewed |
+| --- | --- | --- | --- |
+| _none yet_ | | | |
+
+## Case law
+
+| ID | Citation | Court | Status | Last reviewed |
+| --- | --- | --- | --- | --- |
+| _none yet_ | | | | |
 
 ## Guidance
 
@@ -47,27 +40,19 @@ deliberately excluded.
 | --- | --- | --- | --- | --- |
 | _none yet_ | | | | |
 
----
+## Commentary
 
-## Secondary
+Red Book and equivalents. Excerpts with pinpoint citations only.
 
-| ID | Citation | Author | Edition | Last reviewed |
-| --- | --- | --- | --- | --- |
-| _none yet_ | | | | |
-
----
-
-## Contracts and forms
-
-| ID | Title | Type | Governing law | Last reviewed |
-| --- | --- | --- | --- | --- |
-| _none yet_ | | | | |
+| ID | Citation | Edition | Last reviewed |
+| --- | --- | --- | --- |
+| _none yet_ | | | |
 
 ---
 
 ## Superseded and historical
 
-Entries kept for the record. Do not rely on these without checking `superseded_by`.
+Kept for the record. Do not rely on these without checking `superseded_by`.
 
 | ID | Citation | Status | Superseded by |
 | --- | --- | --- | --- |

@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Validate knowledge-base entries against knowledge-base/_schema/frontmatter.md.
+"""Validate knowledge-base entries against knowledge-base/schema.md.
+
+Entries live in knowledge-base/sources/, one provision per file, with no subfolders —
+what a source is lives in its frontmatter, not its path.
 
 Checks that every entry has the required frontmatter, uses allowed values, carries a
 unique id matching its filename, and that cross-references resolve.
@@ -19,10 +22,10 @@ import sys
 from pathlib import Path
 
 KB_DIRNAME = "knowledge-base"
+SOURCES_DIRNAME = "sources"
 
-# Directories and files that are documentation about the KB, not entries in it.
-SKIP_DIRS = {"_schema", "_templates", "_meta", "reference"}
-SKIP_FILES = {"README.md", "CONTRIBUTING.md", "INDEX.md"}
+# Documentation about the KB rather than an entry in it.
+SKIP_FILES = {"README.md"}
 
 REQUIRED = [
     "id",
@@ -39,13 +42,12 @@ REQUIRED = [
 
 ENUMS = {
     "doc_type": {
-        "constitution", "statute", "regulation", "case", "treaty",
-        "agency-guidance", "advisory-opinion", "ruling", "restatement",
-        "treatise", "article", "contract", "form", "clause", "glossary", "other",
+        "statute", "statutory-instrument", "rule", "practice-direction",
+        "case", "guidance", "form", "treatise", "article", "other",
     },
     "authority_level": {
         "binding-primary", "persuasive-primary", "official-guidance",
-        "secondary", "non-authoritative",
+        "commentary", "non-authoritative",
     },
     "status": {
         "in-force", "amended", "repealed", "superseded", "pending",
@@ -137,16 +139,8 @@ def as_id_list(value: object) -> list[str]:
     return [str(value).strip()]
 
 
-def find_entries(kb: Path) -> list[Path]:
-    entries = []
-    for path in sorted(kb.rglob("*.md")):
-        rel = path.relative_to(kb)
-        if rel.parts[0] in SKIP_DIRS:
-            continue
-        if rel.name in SKIP_FILES:
-            continue
-        entries.append(path)
-    return entries
+def find_entries(sources: Path) -> list[Path]:
+    return [p for p in sorted(sources.glob("*.md")) if p.name not in SKIP_FILES]
 
 
 def check_entry(path: Path, rel: str, seen: dict[str, str],
@@ -222,11 +216,14 @@ def check_entry(path: Path, rel: str, seen: dict[str, str],
         if is_blank(meta.get("current_through")):
             warnings.append(f"{rel}: binding-primary entry has no 'current_through'")
 
-    parts = Path(rel).parts
-    if parts and parts[0] == "primary":
-        level = str(meta.get("authority_level", "")).strip()
-        if level in {"secondary", "non-authoritative"}:
-            errors.append(f"{rel}: filed under primary/ but authority_level={level!r}")
+    # Commentary is copyrighted; reproducing it whole is a licensing problem, not a
+    # formatting one, so this is an error rather than a warning.
+    if str(meta.get("doc_type", "")).strip() in {"treatise", "article"}:
+        if reproduction == "full-text":
+            errors.append(
+                f"{rel}: doc_type={meta.get('doc_type')!r} with reproduction='full-text' — "
+                f"commentary should be 'excerpt' or 'citation-only'"
+            )
 
     return meta
 
@@ -253,12 +250,17 @@ def main() -> int:
         print(f"error: no knowledge base at {kb}", file=sys.stderr)
         return 1
 
+    sources = kb / SOURCES_DIRNAME
+    if not sources.is_dir():
+        print(f"error: no sources folder at {sources}", file=sys.stderr)
+        return 1
+
     errors: list[str] = []
     warnings: list[str] = []
     seen: dict[str, str] = {}
     parsed: dict[str, dict[str, object]] = {}
 
-    paths = find_entries(kb)
+    paths = find_entries(sources)
     for path in paths:
         rel = str(path.relative_to(kb))
         meta = check_entry(path, rel, seen, errors, warnings)
